@@ -56,7 +56,7 @@
         
         <form action="">
         <?php 
-                    $total_qus = 10;
+                    $total_qus = 5;
                     for ($i = 1; $i <= $total_qus; $i++){
         ?>
         
@@ -87,7 +87,7 @@
 
             <?php } ?>
            <center>
-            <button class="btn btn-primary mb-3">Submit</button>
+            <button class="btn btn-primary my-3">Submit</button>
            </center> 
         </form>
     </div>

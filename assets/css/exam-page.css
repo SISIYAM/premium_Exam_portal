@@ -5,17 +5,18 @@
 }
 
 .exam-ques{
-    background-color: #FFFBF5;
+    background-color: #fff;
     display: flex;
     justify-content: space-around;
+    margin-top: 80px;
 }
 
 .quiz-container {
-    background-color: #FFFBF5;
+    background-color: #fff;
     border-radius: 20px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     max-width: 650px;
-    padding: 4rem;
+    padding: 2rem;
 }
 
 .loading-bar {
@@ -33,26 +34,26 @@
     transition: 0.3s ease;
 }
 
-h2 {
+.exam-ques h2 {
     font-size: 22px;
     text-align: center;
 }
 
-ul {
+.exam-ques ul {
     list-style-type: none;
     padding: 0;
 }
 
-ul li {
+.exam-ques ul li {
     font-size: 1.2rem;
     margin: 1rem 0;
 }
 
-ul li input {
+.exam-ques ul li input {
     display: none;
 }
 
-ul li label {
+.exam-ques ul li label {
     cursor: pointer;
     display: block;
     color: #666;
@@ -63,17 +64,17 @@ ul li label {
     transition: 0.1s ease;
 }
 
-ul li input:hover+label {
+.exam-ques ul li input:hover+label {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
         rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
 }
 
-ul li input:checked+label {
+.exam-ques ul li input:checked+label {
     outline: 2px solid var(--accent-color);
     color: var(--accent-color);
 }
 
-button {
+ button {
     color: var(--accent-color);
     background-color: transparent;
     font-family: inherit;
@@ -97,24 +98,28 @@ button:active {
 
 .header {
     padding-block: 0px;
-    left: 40px;
+    
 }
 
 .header.active {
     padding-block: 0px;
-    left: 40px;
 }
 
 /** Timer ***/
 .timer{
     position: fixed;
     padding: 10px;
-    top: 140px;
-    right: 35px;
+    top: 80px;
+    right: 30px;
     z-index: 9999;
 }
 
 
+@media (min-width: 300px) {
+    .quiz-container {
+        width: 330px;
+    }
+}
 @media (min-width: 450px) {
     .quiz-container {
         width: 510px;
