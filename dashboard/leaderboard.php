@@ -1,56 +1,67 @@
-<?php include("includes/header.php"); ?>
+<!DOCTYPE html>
+<html lang="en">
 
-        <!--**********************************
+<head>
+  <?php
+include 'includes/head.php';
+?>
+</head>
+
+<body>
+
+  <!-- Nav bar -->
+  <?php include 'includes/nav.php'; ?>
+  <!--**********************************
             Content body start
         ***********************************-->
-        <div class="content-body">
-            <div class="container-fluid">
-                <div class="row page-titles mx-0">
-                    <div class="col-sm-6 p-md-0">
-                        <div class="welcome-text">
-                            <h4>Hi, welcome back!</h4>
-                            <span class="ml-1">Leaderboard</span>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0)">Leaderboard</a></li>
-                        </ol>
-                    </div>
-                </div>
-                <!-- row -->
+  <div class="content-body">
+    <div class="container-fluid">
+      <div class="row page-titles mx-0">
+        <div class="col-sm-6 p-md-0">
+          <div class="welcome-text">
+            <h4>Hi, welcome back!</h4>
+            <span class="ml-1">Leaderboard</span>
+          </div>
+        </div>
+        <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Leaderboard</a></li>
+          </ol>
+        </div>
+      </div>
+      <!-- row -->
 
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Leaderboard</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="example" class="display" style="min-width: 845px">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Marks</th>
-                                                
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php for( $i = 1; $i <= 50; $i++){ ?>
-                                            <tr>
-                                                <td class="text-dark">Evangel</td>
-                                                <td class="text-dark"><?=$i?></td>
-                                                <td ><?= 50-$i?></td>
-                                               
-                                            </tr>
-                                            <?php } ?>
-                                        
-                                        </tbody>
-                                        <!-- <tfoot>
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Leaderboard</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table id="example" class="display" style="min-width: 845px">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Position</th>
+                      <th>Marks</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php for( $i = 1; $i <= 50; $i++){ ?>
+                    <tr>
+                      <td class="text-dark">Evangel</td>
+                      <td class="text-dark"><?=$i?></td>
+                      <td><?= 50-$i?></td>
+
+                    </tr>
+                    <?php } ?>
+
+                  </tbody>
+                  <!-- <tfoot>
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Position</th>
@@ -60,12 +71,12 @@
                                                 <th>Salary</th>
                                             </tr>
                                         </tfoot> -->
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <div class="col-12">
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Datatable</h4>
@@ -556,53 +567,53 @@
                             </div>
                         </div>
                     </div> -->
-                </div>
-            </div>
-        </div>
-        <!--**********************************
+      </div>
+    </div>
+  </div>
+  <!--**********************************
             Content body end
         ***********************************-->
 
 
-        <!--**********************************
+  <!--**********************************
             Footer start
         ***********************************-->
-        <div class="footer">
-            <div class="copyright">
-                <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
-            </div>
-        </div>
-        <!--**********************************
+  <div class="footer">
+    <div class="copyright">
+      <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
+    </div>
+  </div>
+  <!--**********************************
             Footer end
         ***********************************-->
 
-        <!--**********************************
+  <!--**********************************
            Support ticket button start
         ***********************************-->
 
-        <!--**********************************
+  <!--**********************************
            Support ticket button end
         ***********************************-->
 
-        
-    </div>
-    <!--**********************************
+
+  </div>
+  <!--**********************************
         Main wrapper end
     ***********************************-->
 
-    <!--**********************************
+  <!--**********************************
         Scripts
     ***********************************-->
-    <!-- Required vendors -->
-    <script src="./vendor/global/global.min.js"></script>
-    <script src="./js/quixnav-init.js"></script>
-    <script src="./js/custom.min.js"></script>
-    
+  <!-- Required vendors -->
+  <script src="./vendor/global/global.min.js"></script>
+  <script src="./js/quixnav-init.js"></script>
+  <script src="./js/custom.min.js"></script>
 
 
-    <!-- Datatable -->
-    <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="./js/plugins-init/datatables.init.js"></script>
+
+  <!-- Datatable -->
+  <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
+  <script src="./js/plugins-init/datatables.init.js"></script>
 
 </body>
 
