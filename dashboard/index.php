@@ -1,3 +1,7 @@
+<?php 
+include './includes/login_required.php';
+include './Admin/includes/dbcon.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 

@@ -1,3 +1,7 @@
+<?php
+include './Admin/includes/dbcon.php';
+include './includes/login_required.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +9,57 @@
   <?php
 include 'includes/head.php';
 ?>
+
+  <style>
+  .radio-item [type="radio"] {
+    display: none;
+  }
+
+  .radio-item+.radio-item {
+    margin-top: 15px;
+  }
+
+  .radio-item label {
+    width: 100%;
+    color: #000000;
+    display: block;
+    padding: 20px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 400;
+    position: relative;
+    border: 2px solid #CACACA;
+
+  }
+
+  .correct {
+    border-color: #59D933;
+    background: #C1F0DB;
+  }
+
+  .wrong {
+    border-color: #59D933;
+    background: #F8D7DA;
+  }
+
+  /* responsive cke-editor uploaded image */
+  .radio-list img {
+    max-width: 100%;
+    height: auto !important;
+  }
+
+  .radio-item {
+    max-width: 100%;
+    height: auto !important;
+  }
+
+  .solution img {
+    max-width: 100%;
+    height: auto !important;
+  }
+  </style>
 </head>
 
 <body>
@@ -16,14 +71,44 @@ include 'includes/head.php';
         ***********************************-->
   <div class="content-body">
     <!-- row -->
+    <?php 
+    if(isset($_GET['Exam-History'])){
+      $exam_id = $_GET['Exam-History'];
+      $select = mysqli_query($con, "SELECT * FROM exam WHERE exam_id='$exam_id'");
+      if(mysqli_num_rows($select) > 0){
+        $ExamRow = mysqli_fetch_array($select);
+
+        $examName = $ExamRow['exam_name'];
+        $totalMarks = $ExamRow['mcq_marks'] + $ExamRow['written_marks'];
+        $mcq_marks = $ExamRow['mcq_marks'];
+        $written_marks = $ExamRow['written_marks'];
+        $examStart = $ExamRow['exam_start'];
+        $examEnd = $ExamRow['exam_end']; 
+        $duration = $ExamRow['duration'];
+      }else{
+        $examName = "N/A";
+        $totalMarks = "N/A";
+        $mcq_marks = "N/A";
+        $written_marks = "N/A";
+        $examStart = "N/A";
+        $examEnd = "N/A";
+        $duration = "N/A";
+      }
+    
+    ?>
     <div class="container-fluid">
       <div class="row">
+        <?php
+                  $showResult = mysqli_query($con, "SELECT * FROM result WHERE student_id='$student_id' AND exam_id='$exam_id'");
+                  if(mysqli_num_rows($showResult) > 0){
+                    $showResultRow = mysqli_fetch_array($showResult);
+                    ?>
         <div class="col-lg-3 col-sm-6">
           <div class="card">
             <div class="stat-widget-two card-body">
               <div class="stat-content">
-                <div class="stat-text">Today Marks </div>
-                <div class="stat-digit">20</div>
+                <div class="stat-text">Obtained Marks </div>
+                <div class="stat-digit"><?=$showResultRow['result']?></div>
               </div>
               <div class="progress">
                 <div class="progress-bar progress-bar-success w-85" role="progressbar" aria-valuenow="85"
@@ -37,7 +122,7 @@ include 'includes/head.php';
             <div class="stat-widget-two card-body">
               <div class="stat-content">
                 <div class="stat-text">Correct Answer</div>
-                <div class="stat-digit">19</div>
+                <div class="stat-digit"><?=$showResultRow['right_answered']?></div>
               </div>
               <div class="progress">
                 <div class="progress-bar progress-bar-primary w-75" role="progressbar" aria-valuenow="78"
@@ -51,7 +136,7 @@ include 'includes/head.php';
             <div class="stat-widget-two card-body">
               <div class="stat-content">
                 <div class="stat-text">Wrong Answer</div>
-                <div class="stat-digit">5</div>
+                <div class="stat-digit"><?=$showResultRow['wrong_answered']?></div>
               </div>
               <div class="progress">
                 <div class="progress-bar progress-bar-warning w-50" role="progressbar" aria-valuenow="50"
@@ -65,7 +150,7 @@ include 'includes/head.php';
             <div class="stat-widget-two card-body">
               <div class="stat-content">
                 <div class="stat-text">Not Answered</div>
-                <div class="stat-digit">6</div>
+                <div class="stat-digit"><?=$showResultRow['not_answered']?></div>
               </div>
               <div class="progress">
                 <div class="progress-bar progress-bar-danger w-65" role="progressbar" aria-valuenow="65"
@@ -92,15 +177,212 @@ include 'includes/head.php';
                 </div>
               </div>
             </div>
+            <div class="col-lg-6 col-sm-6">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title"><?=$examName?></h4>
+                </div>
+                <div class="card-body">
+                  <p class="badge badge-rounded badge-outline-dark">Total Marks: <?=$mcq_marks?></p> <br>
+                  <p class="badge badge-rounded badge-outline-dark">Exam Date: <?=$examStart?></p> <br>
+                  <p class="badge badge-rounded badge-outline-dark">Exam End: <?=$examEnd?></p> <br>
+                  <p class="badge badge-rounded badge-outline-dark">Exam Duration: <?php
+                      if(((int)($duration/3600)) == 0 && ((int)($duration%3600)/60) != 0 && (($duration%3600)%60) != 0){
+                        echo ((int)(($duration%3600)/60)." min ".(($duration%3600)%60)." Sec");
+                      }elseif (((int)($duration/3600)) != 0 && ((int)($duration%3600)/60) != 0 && (($duration%3600)%60) == 0) {
+                        echo ((int)($duration/3600)." hour ".(int)(($duration%3600)/60)." min " );
+                      }elseif (((int)($duration/3600)) == 0 && (($duration%3600)%60) == 0 && ((int)($duration%3600)/60) != 0) {
+                        echo ((int)(($duration%3600)/60)." min " );
+                      }elseif (((int)($duration/3600)) != 0 && ((int)($duration%3600)/60) == 0 && (($duration%3600)%60)==0) {
+                        echo ((int)($duration/3600)." hour ");
+                      } else{
+                        echo ((int)($duration/3600)." hour ".(int)(($duration%3600)/60)." min ".(($duration%3600)%60)." Sec");
+                      }
+                      ?></p> <br>
+                  <p class="badge badge-rounded badge-outline-dark">Biology</p>
+                  <div class="my-2">
+                    <a href="result.php?Solution=<?=$exam_id?>"><button class="btn btn-primary mr-2">View
+                        Solution</button></a>
+                    <a href="result.php?Leader-Board=<?=$exam_id?>"> <button class="btn btn-dark my-2">Leader
+                        Board</button></a>
+                  </div>
+                </div>
+              </div>
+            </div>
 
           </div>
         </div>
       </div>
 
-
+      <?php
+                  }
+                  ?>
 
 
     </div>
+    <?php
+    }elseif(isset($_GET['Solution'])){
+      $examId = $_GET['Solution'];
+      $select = mysqli_query($con, "SELECT * FROM exam WHERE exam_id='$examId'");
+      if(mysqli_num_rows($select) > 0){
+        $examName = mysqli_fetch_array($select)['exam_name'];
+      }else{
+        $examName = "N/A";
+      }
+      ?>
+    <div class="row">
+      <div class="col-xl-12 col-xxl-12">
+        <div class="card">
+
+          <?php 
+              $i = 1;
+              $select = mysqli_query($con, "SELECT * FROM questions WHERE exam_id='$examId'");
+              if(mysqli_num_rows($select) > 0)
+              {
+                while($row = mysqli_fetch_array($select)){
+                  $questionID = $row['id'];
+                  $correctAnswer = $row['answer'];
+                  $matchQuestion = mysqli_query($con, "SELECT * FROM record WHERE exam_id='$examId' AND student_id='$student_id' AND question_id='$questionID'");
+                  if(mysqli_num_rows($matchQuestion) > 0){
+                    $answeredOption = mysqli_fetch_array($matchQuestion)['answered'];
+                  }else{
+                    $answeredOption = 5;
+                  }
+                  ?>
+
+          <div class="card-body">
+            <h6 class="badge bg-primary text-light" style="font-size:13px">Question : <?=$i?> </h6>
+            <span class="" style="float: right; color:#000000; font-weight:bold">Mark : <?=$row['mark']?></span>
+            <div class="radio-list col-xl-12">
+              <p for="" class="font-weight-bold text-dark my-3 h4" style="color:#000000;">
+                <?=$row['question']?>
+              </p>
+              <!-- if user answered correct answer then -->
+              <?php
+                  if($answeredOption == $correctAnswer){
+                  ?>
+              <div class="radio-item">
+                <label <?php if($answeredOption == 1){
+                      ?> class="correct" <?php
+                    } ?> for="radio1<?=$i?>"><?=$row['option_1']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($answeredOption == 2){
+                      ?> class="correct" <?php
+                    } ?> for="radio2<?=$i?>"><?=$row['option_2']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($answeredOption == 3){
+                      ?> class="correct" <?php
+                    } ?> for="radio3<?=$i?>"><?=$row['option_3']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($answeredOption == 4){
+                      ?> class="correct" <?php
+                    } ?> for="radio4<?=$i?>"><?=$row['option_4']?></label>
+              </div>
+              <?php  
+            }elseif($answeredOption == 5){
+              ?>
+              <span class="btn btn-light">Not Answered</span>
+              <div class="radio-item">
+                <label <?php if($correctAnswer == 1){
+                      ?> class="correct" <?php
+                    } ?> for="radio1<?=$i?>"><?=$row['option_1']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($correctAnswer == 2){
+                      ?> class="correct" <?php
+                    } ?> for="radio2<?=$i?>"><?=$row['option_2']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($correctAnswer == 3){
+                      ?> class="correct" <?php
+                    } ?> for="radio3<?=$i?>"><?=$row['option_3']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($correctAnswer == 4){
+                      ?> class="correct" <?php
+                    } ?> for="radio4<?=$i?>"><?=$row['option_4']?></label>
+              </div>
+              <?php
+            }else{
+              ?>
+              <div class="radio-item">
+                <label <?php if($answeredOption == 1){
+                        ?> class="wrong" <?php
+                      } if($correctAnswer == 1){
+                        ?> class="correct" <?php
+                      } ?> for="radio1<?=$i?>"><?=$row['option_1']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($answeredOption == 2){
+                        ?> class="wrong" <?php
+                      } if($correctAnswer == 2){
+                        ?> class="correct" <?php
+                      } ?> for="radio2<?=$i?>"><?=$row['option_2']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($answeredOption == 3){
+                        ?> class="wrong" <?php
+                      } if($correctAnswer == 3){
+                        ?> class="correct" <?php
+                      } ?> for="radio3<?=$i?>"><?=$row['option_3']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($answeredOption == 4){
+                        ?> class="wrong" <?php
+                      } if($correctAnswer == 4){
+                        ?> class="correct" <?php
+                      } ?> for="radio4<?=$i?>"><?=$row['option_4']?></label>
+              </div>
+              <?php
+            }
+              ?>
+            </div>
+
+          </div>
+          <?php
+                  if($row['solution'] > 0){
+                    ?>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-12 mb-4">
+                <div class="card bg-light text-dark">
+                  <div class="card-body rounded" style="border:2px solid #2EAD1E">
+                    <span class="font-weight-bold text-dark">Solution:</span>
+                    <div class="solution">
+                      <?=$row['solution']?>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <?php
+                  }
+                  ?>
+          <?php
+            }
+          }
+          ?>
+        </div>
+
+        </form>
+      </div>
+    </div>
+    <?php
+    }
+    ?>
   </div>
   <!--**********************************
             Content body end
