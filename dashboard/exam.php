@@ -1,4 +1,5 @@
-<?php include 'Admin/includes/dbcon.php'; ?>
+<?php include 'Admin/includes/dbcon.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -74,23 +75,7 @@ include 'includes/head.php';
   <!-- Nav bar -->
   <?php include 'includes/nav.php'; ?>
 
-  <div class="content-body">
-    <div class="container-fluid">
-      <div class="row page-titles mx-0">
-        <div class="col-sm-6 p-md-0">
-          <div class="welcome-text">
-            <h4>Hi, welcome back!</h4>
-            <span class="ml-1">Element</span>
-          </div>
-        </div>
-        <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Form</a></li>
-            <li class="breadcrumb-item active"><a href="javascript:void(0)">Element</a></li>
-          </ol>
-        </div>
-      </div>
-      <?php 
+  <?php 
     if(isset($_GET['Exam-ID'])){
       $examId= $_GET['Exam-ID'];
       $selectExam = mysqli_query($con,"SELECT * FROM exam WHERE exam_id = '$examId'");
@@ -121,6 +106,22 @@ include 'includes/head.php';
         $examEndTimestamp = strtotime($examEndDate);
       }
       ?>
+  <div class="content-body">
+    <div class="container-fluid">
+      <div class="row page-titles mx-0">
+        <div class="col-sm-6 p-md-0">
+          <div class="welcome-text">
+            <h4><?=$examNme?></h4>
+
+          </div>
+        </div>
+        <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Exam</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)"><?=$examNme?></a></li>
+          </ol>
+        </div>
+      </div>
 
       <?php
       if($current_time < $examStartTimestamp){
@@ -180,52 +181,82 @@ include 'includes/head.php';
         ?>
       <div class="row">
         <div class="col-xl-12 col-xxl-12">
-          <div class="card">
+          <form action="" method="post">
+            <input type="hidden" value="<?=$examId?>" name="exam_id">
+            <input type="hidden" value="<?=$duration?>" id="timeLeft">
+            <div class="card">
 
-            <?php 
+              <?php 
           $i = 0;
           $select = mysqli_query($con, "SELECT * FROM questions WHERE exam_id='$examId'");
           if(mysqli_num_rows($select) > 0){
             while($row = mysqli_fetch_array($select)){
               $i++;
               ?>
-            <div class="card-body">
-              <h6 class="badge bg-primary text-light" style="font-size:13px">Question : <?=$i?> </h6>
-              <span class="" style="float: right; color:#000000; font-weight:bold">Mark : <?=$row['mark']?></span>
-              <div class="radio-list col-xl-12">
-                <p for="" class="font-weight-bold text-dark my-3 h4" style="color:#000000;">
-                  <?=$row['question']?>
-                </p>
-                <div class="radio-item">
-                  <input type="radio" name="<?=$row['id']?>" id="radio1<?=$i?>">
-                  <label for="radio1<?=$i?>"><?=$row['option_1']?></label>
-                </div>
-                <div class="radio-item">
-                  <input type="radio" name="<?=$row['id']?>" id="radio2<?=$i?>">
-                  <label for="radio2<?=$i?>"><?=$row['option_2']?></label>
-                </div>
-                <div class="radio-item">
-                  <input type="radio" name="<?=$row['id']?>" id="radio3<?=$i?>">
-                  <label for="radio3<?=$i?>"><?=$row['option_3']?></label>
-                </div>
-                <div class="radio-item">
-                  <input type="radio" name="<?=$row['id']?>" id="radio4<?=$i?>">
-                  <label for="radio4<?=$i?>"><?=$row['option_4']?></label>
+              <div class="card-body">
+                <h6 class="badge bg-primary text-light" style="font-size:13px">Question : <?=$i?> </h6>
+                <span class="" style="float: right; color:#000000; font-weight:bold">Mark : <?=$row['mark']?></span>
+                <div class="radio-list col-xl-12">
+                  <p for="" class="font-weight-bold text-dark my-3 h4" style="color:#000000;">
+                    <?=$row['question']?>
+                  </p>
+                  <?php
+                 if(isset($row['option_1'])){
+                  ?>
+                  <div class="radio-item">
+                    <input type="radio" name="<?=$row['id']?>" value="1 " id="radio1<?=$i?>">
+                    <label for="radio1<?=$i?>"><?=$row['option_1']?></label>
+                  </div>
+                  <?php
+                 }
+                 ?>
+                  <?php
+                 if(isset($row['option_2'])){
+                  ?>
+                  <div class="radio-item">
+                    <input type="radio" name="<?=$row['id']?>" value="2" id="radio2<?=$i?>">
+                    <label for="radio2<?=$i?>"><?=$row['option_2']?></label>
+                  </div>
+                  <?php
+                 }
+                 ?>
+                  <?php
+                 if(isset($row['option_3'])){
+                  ?>
+                  <div class="radio-item">
+                    <input type="radio" name="<?=$row['id']?>" value="3" id="radio3<?=$i?>">
+                    <label for="radio3<?=$i?>"><?=$row['option_3']?></label>
+                  </div>
+                  <?php
+                 }
+                 ?>
+                  <?php
+                 if(isset($row['option_4'])){
+                  ?>
+                  <div class="radio-item">
+                    <input type="radio" name="<?=$row['id']?>" value="4" id="radio4<?=$i?>">
+                    <label for="radio4<?=$i?>"><?=$row['option_4']?></label>
+                  </div>
+                  <?php
+                 }
+                 ?>
+                  <input type="radio" checked value="5" name="<?=$row['id']?>" style="display:none;">
                 </div>
 
               </div>
-
-            </div>
-            <?php
+              <?php
             }
           }
           ?>
+              <button type="submit" name="submitExam" class="btn btn-primary btn-lg col-xl-12 text-light">Final
+                Submission</button>
+            </div>
 
-          </div>
+          </form>
         </div>
       </div>
       <?php
-      }elseif($current_time >= $examEndTimestamp){
+      }elseif($current_time >= $examEndTimestamp){  
         ?>
       <div class="card text-center col-lg-12">
         <div class="card-header text-dark font-weight-bold">
@@ -239,7 +270,7 @@ include 'includes/head.php';
       </div>
       <?php
       }
-      ?> ?>
+      ?>
 
       <?php
     }else{
@@ -254,6 +285,7 @@ include 'includes/head.php';
 
   <!--  Footer ---->
   <?php include "includes/footer.php"; ?>
+  <?php include './includes/code.php';?>
 
 </body>
 

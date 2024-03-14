@@ -55,6 +55,7 @@
         <script src="./vendor/jqvmap/js/jquery.vmap.min.js"></script>
         <script src="./vendor/jqvmap/js/jquery.vmap.usa.js"></script>
         <script src="./vendor/jquery.counterup/jquery.counterup.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
         <script src="./js/dashboard/dashboard-1.js"></script>
