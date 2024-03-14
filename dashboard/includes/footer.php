@@ -59,3 +59,4 @@
 
 
         <script src="./js/dashboard/dashboard-1.js"></script>
+        <script src="js/timer.js"></script>

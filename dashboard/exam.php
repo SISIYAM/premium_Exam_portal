@@ -121,6 +121,27 @@ include 'includes/head.php';
       ?>
   <div class="content-body">
     <div class="container-fluid">
+      <?php
+      if($current_time >= $examStartTimestamp && $current_time < $examEndTimestamp){
+        ?>
+      <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <b style="position:fixed; z-index:999; right:1%; top:10%;opacity: 0.8;"
+          class="alert alert-danger solid alert-rounded ">
+          <div id="time-status">
+            <span class="hidden" id="hours-left"></span>
+            <span id="min-left"></span>
+            <span id="sec-left"></span>
+            left
+          </div>
+
+          <span id="session-time" style="display: none;"></span>
+
+          <span id="break-time" style="display: none;"></span>
+        </b>
+      </div>
+      <?php
+      }
+      ?>
       <div class="row page-titles mx-0">
         <div class="col-sm-6 p-md-0">
           <div class="welcome-text">
@@ -264,7 +285,8 @@ include 'includes/head.php';
             }
           }
           ?>
-              <button type="submit" name="submitExam" class="btn btn-primary btn-lg col-xl-12 text-light">Final
+              <button type="submit" id="submitBtn" name="submitExam"
+                class="btn btn-primary btn-lg col-xl-12 text-light">Final
                 Submission</button>
             </div>
 
