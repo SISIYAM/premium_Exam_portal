@@ -1,6 +1,6 @@
 <?php 
-include './includes/login_required.php';
 include './Admin/includes/dbcon.php';
+include './includes/login_required.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

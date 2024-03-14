@@ -252,7 +252,10 @@ include 'includes/head.php';
 
           <div class="card-body">
             <h6 class="badge bg-primary text-light" style="font-size:13px">Question : <?=$i?> </h6>
-            <span class="" style="float: right; color:#000000; font-weight:bold">Mark : <?=$row['mark']?></span>
+            <span class="badge bg-light text-dark"
+              style="float: right; margin-right:20px; color:#000000; font-weight:bold">Mark
+              :
+              <?=$row['mark']?></span>
             <div class="radio-list col-xl-12">
               <p for="" class="font-weight-bold text-dark my-3 h4" style="color:#000000;">
                 <?=$row['question']?>
@@ -287,7 +290,7 @@ include 'includes/head.php';
               <?php  
             }elseif($answeredOption == 5){
               ?>
-              <span class="btn btn-light">Not Answered</span>
+              <span class="btn btn-dark mb-4">Not Answered</span>
               <div class="radio-item">
                 <label <?php if($correctAnswer == 1){
                       ?> class="correct" <?php

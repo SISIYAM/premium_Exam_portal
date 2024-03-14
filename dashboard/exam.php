@@ -69,6 +69,17 @@ include 'includes/head.php';
     visibility: visible;
     transform: scale(1);
   }
+
+  /* responsive cke-editor uploaded image */
+  .radio-list img {
+    max-width: 100%;
+    height: auto !important;
+  }
+
+  .radio-item {
+    max-width: 100%;
+    height: auto !important;
+  }
   </style>
 </head>
 
@@ -197,7 +208,10 @@ include 'includes/head.php';
               ?>
               <div class="card-body">
                 <h6 class="badge bg-primary text-light" style="font-size:13px">Question : <?=$i?> </h6>
-                <span class="" style="float: right; color:#000000; font-weight:bold">Mark : <?=$row['mark']?></span>
+                <span class="badge bg-light text-dark"
+                  style="float: right; margin-right:20px; color:#000000; font-weight:bold">Mark
+                  :
+                  <?=$row['mark']?></span>
                 <div class="radio-list col-xl-12">
                   <p for="" class="font-weight-bold text-dark my-3 h4" style="color:#000000;">
                     <?=$row['question']?>
