@@ -123,15 +123,12 @@
                 <i class="mdi mdi-account"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
-                <a href="./app-profile.html" class="dropdown-item">
+                <a href="details.php?Profile" class="dropdown-item">
                   <i class="icon-user"></i>
                   <span class="ml-2">Profile </span>
                 </a>
-                <a href="./email-inbox.html" class="dropdown-item">
-                  <i class="icon-envelope-open"></i>
-                  <span class="ml-2">Inbox </span>
-                </a>
-                <a href="./page-login.html" class="dropdown-item">
+
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal" class="dropdown-item">
                   <i class="icon-key"></i>
                   <span class="ml-2">Logout </span>
                 </a>
@@ -170,3 +167,63 @@
   <!--**********************************
             Sidebar end
         ***********************************-->
+
+  <!-- Modal Logout -->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="text-dark">Are you sure you want to logout?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+          <a href="includes/logout.php" class="btn btn-primary">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal PassWord Change -->
+  <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelPassword"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabelPassword">Change Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="" method="post">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Old Password:</label>
+              <input type="text" class="form-control" id="recipient-name" name="old_password"
+                placeholder="Enter Old Password">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">New Password:</label>
+              <input type="text" class="form-control" id="recipient-name" name="new_password"
+                placeholder="Enter New Password">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Confirm Password:</label>
+              <input type="text" class="form-control" id="recipient-name" name="confirm_password"
+                placeholder="Enter Confirm Password">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+            <button type="submit" name="changePassword" class="btn btn-primary">Change</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
