@@ -311,6 +311,151 @@ include 'includes/head.php';
       ?>
 
       <?php
+    }elseif (isset($_GET['CustomExam'])) {
+      # code...
+      ?>
+      <div class="content-body">
+        <div class="container-fluid">
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <b style="position:fixed; z-index:999; right:1%; top:10%;opacity: 0.8;"
+              class="alert alert-danger solid alert-rounded ">
+              <div id="time-status">
+                <span class="hidden" id="hours-left"></span>
+                <span id="min-left"></span>
+                <span id="sec-left"></span>
+                left
+              </div>
+
+              <span id="session-time" style="display: none;"></span>
+
+              <span id="break-time" style="display: none;"></span>
+            </b>
+          </div>
+          <!-- row -->
+          <?php
+               if(isset($_POST['create_exam'])){
+                $exam_name = $_POST['exam_name'];
+                $marks = $_POST['custom_mark'];
+                $negative_marks = $_POST['negative_mark'];
+                $duration = $_POST['duration'] * 60;
+                $customExam_id = uniqid();
+                $examStart = time();
+                date_default_timezone_set('Asia/dhaka');
+                $exam_date= date('d M Y h:i A', $examStart);
+                
+                //insert new custom exam
+                $insertCustomExam = mysqli_query($con,"INSERT INTO custom_exam (`exam_name`, `exam_id`, `duration`, `exam_start`, `mcq_marks`,`negative_mark`, `student_id`) 
+                VALUES ('$exam_name','$customExam_id','$duration','$exam_date','$marks','$negative_marks','$student_id')");
+                
+                $i = 0;
+          ?>
+          <div class="row">
+            <div class="col-xl-12 col-xxl-12">
+              <form action="" method="post">
+                <input type="hidden" id="timeLeft" value="<?=$duration?>">
+                <input type="hidden" id="" name="negative_mark" value="<?=$negative_marks?>">
+                <input type="hidden" id="" name="mark" value="<?=$marks?>">
+                <input type="hidden" id="" name="exam_id" value="<?=$customExam_id?>">
+                <div class="card">
+
+                  <!-- code for auto fetch questions -->
+                  <?php
+                $search_subject = mysqli_query($con, "SELECT * FROM subjects");
+                if(mysqli_num_rows($search_subject) > 0){
+                  while ($subject_row = mysqli_fetch_array($search_subject)) {
+                    if($_POST[$subject_row['id']] != 0 && $_POST[$subject_row['id']] != NULL){
+                      $limit = $_POST[$subject_row['id']];
+                      $subject_id = $subject_row['id'];
+                      ?>
+                  <div class="card-header text-dark h2"><?=$subject_row['subject']?></div>
+
+                  <?php 
+         
+          $select = mysqli_query($con, "SELECT * FROM questions WHERE subject_id='$subject_id' ORDER BY RAND() LIMIT $limit");
+          if(mysqli_num_rows($select) > 0){
+            while($row = mysqli_fetch_array($select)){
+              $i++;
+              ?>
+                  <div class="card-body">
+                    <h6 class="badge bg-primary text-light" style="font-size:13px">Question : <?=$i?> </h6>
+                    <span class="badge bg-light text-dark"
+                      style="float: right; margin-right:20px; color:#000000; font-weight:bold">Mark
+                      :
+                      <?=$marks?></span>
+                    <div class="radio-list col-xl-12">
+                      <p for="" class="font-weight-bold text-dark my-3 h4" style="color:#000000;">
+                        <?=$row['question']?>
+                      </p>
+                      <?php
+                 if(isset($row['option_1'])){
+                  ?>
+                      <div class="radio-item">
+                        <input type="radio" name="<?=$row['id']?>" value="1 " id="radio1<?=$i?>">
+                        <label for="radio1<?=$i?>"><?=$row['option_1']?></label>
+                      </div>
+                      <?php
+                 }
+                 ?>
+                      <?php
+                 if(isset($row['option_2'])){
+                  ?>
+                      <div class="radio-item">
+                        <input type="radio" name="<?=$row['id']?>" value="2" id="radio2<?=$i?>">
+                        <label for="radio2<?=$i?>"><?=$row['option_2']?></label>
+                      </div>
+                      <?php
+                 }
+                 ?>
+                      <?php
+                 if(isset($row['option_3'])){
+                  ?>
+                      <div class="radio-item">
+                        <input type="radio" name="<?=$row['id']?>" value="3" id="radio3<?=$i?>">
+                        <label for="radio3<?=$i?>"><?=$row['option_3']?></label>
+                      </div>
+                      <?php
+                 }
+                 ?>
+                      <?php
+                 if(isset($row['option_4'])){
+                  ?>
+                      <div class="radio-item">
+                        <input type="radio" name="<?=$row['id']?>" value="4" id="radio4<?=$i?>">
+                        <label for="radio4<?=$i?>"><?=$row['option_4']?></label>
+                      </div>
+                      <?php
+                 }
+                 ?>
+                      <input type="radio" checked value="5" name="<?=$row['id']?>" style="display:none;">
+                    </div>
+
+                  </div>
+                  <?php
+            }
+          }
+          ?>
+
+                  <?php
+                    }
+                  }
+                }
+                ?>
+
+                  <button type="submit" id="submitBtn" name="submitCustomExam"
+                    class="btn btn-primary btn-lg col-xl-12 text-light">Final
+                    Submission</button>
+                </div>
+
+              </form>
+            </div>
+          </div>
+          <?php
+          }
+          ?>
+        </div>
+      </div>
+      <?php
+    
     }else{
         echo '<div class="alert alert-danger text-light">Page not found</div>';
     }

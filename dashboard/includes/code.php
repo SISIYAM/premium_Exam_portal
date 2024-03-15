@@ -274,6 +274,73 @@ alert("Failed to insert Result");
 
 }
 
+// calculate result for custom exam
+
+if(isset($_POST['submitCustomExam'])){
+  $exam_id = $_POST['exam_id'];
+  $mark = $_POST['mark'];
+  $negative_mark = $_POST['negative_mark'];
+  $insertStudentID = $_SESSION['student_id'];
+  $right = 0;
+  $wrong = 0;
+  $noAns = 0;
+
+
+    $select = mysqli_query($con, "SELECT * FROM questions");
+    if(mysqli_num_rows($select) > 0){
+     while($res = mysqli_fetch_array($select)){
+
+       if(isset($_POST[$res['id']])){
+        if($_POST[$res['id']] == $res['answer']){
+          $right++;
+        }elseif ($_POST[$res['id']] == 5) {
+          $noAns ++;
+        }else{
+          $wrong++;
+        }
+        $question_id = $res['id'];
+        $answered = $_POST[$res['id']];
+        
+        $query = mysqli_query($con, "INSERT INTO record (student_id,exam_id,question_id,answered) VALUES ('$insertStudentID','$exam_id','$question_id', '$answered')");
+    
+       }
+      
+       
+    }
+     
+     $totalAnswered = $wrong + $right;
+     $result = ($right * $mark)-($wrong * $negative_mark);
+    
+     $insertResult = mysqli_query($con, "INSERT INTO result (`student_id`, `exam_id`, `result`, `answered`, `wrong_answered`, `right_answered`, `not_answered`) 
+     VALUES ('$insertStudentID','$exam_id','$result','$totalAnswered','$wrong','$right','$noAns')"); 
+    
+    if($insertResult){ 
+     ?>
+<script>
+Swal.fire({
+  icon: "success",
+  title: "Submit Successfully!",
+}).then(() => {
+  location.replace("result.php?Custom-Exam-History=<?=$exam_id?>");
+});
+</script>
+<?php
+    }else{
+     ?>
+<script>
+alert("Failed to insert Result");
+</script>
+<?php
+    }
+   
+    }
+
+  
+}
+
+
+
+
 // update user information
 if(isset($_POST['updateStudentsInformation'])){
   $full_name = mysqli_real_escape_string($con, $_POST['full_name']) ;

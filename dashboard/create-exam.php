@@ -1,3 +1,7 @@
+<?php 
+include './Admin/includes/dbcon.php';
+include './includes/login_required.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,16 +27,11 @@ include 'includes/head.php';
             <span class="ml-1">Create Exam</span>
           </div>
         </div>
-        <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Form</a></li>
-            <li class="breadcrumb-item active"><a href="javascript:void(0)">Element</a></li>
-          </ol>
-        </div>
+
       </div>
       <!-- row -->
       <div class="row">
-        <div class="col-xl-6 col-xxl-12">
+        <div class="col-xl-12 col-xxl-12">
 
           <div class="card">
             <div class="card-header">
@@ -40,58 +39,33 @@ include 'includes/head.php';
             </div>
             <div class="card-body">
               <div class="basic-form">
-                <form>
+                <form action="exam.php?CustomExam" method="post">
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Exam Name</label>
                     <div class="col-sm-10">
-                      <input type="email" class="form-control" placeholder="Exam Name">
+                      <input type="name" name="exam_name" class="form-control" placeholder="Exam Name" required>
                     </div>
                   </div>
+
                   <div class="form-group row">
-                    <div class="col-sm-2">Subject</div>
-                    <div class="col-sm-10">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Physics
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Chemistry
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Math
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">
-                          Biology
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-sm-2">Qustion Distribution</div>
+                    <div class="col-sm-2">Question Distribution</div>
                     <div class="col-sm-10">
                       <div class="row">
+                        <?php
+                        $search_subject = mysqli_query($con, "SELECT * FROM subjects");
+                        if(mysqli_num_rows($search_subject) > 0){
+                          while($row = mysqli_fetch_array($search_subject)){
+                            ?>
                         <div class="col-sm-3">
-                          <input type="number" class="form-control" placeholder="Physics">
+                          <input type="number" name="<?=$row['id']?>" class="form-control"
+                            placeholder="<?=$row['subject']?>" value="1">
                         </div>
-                        <div class="col-sm-3">
-                          <input type="number" class="form-control" placeholder="Math">
-                        </div>
-                        <div class="col-sm-3">
-                          <input type="number" class="form-control" placeholder="Chemistry">
-                        </div>
-                        <div class="col-sm-3">
-                          <input type="number" class="form-control" placeholder="Biology">
-                        </div>
+                        <?php
+                          }
+                        }
+                        ?>
+
+
                       </div>
 
                     </div>
@@ -99,19 +73,28 @@ include 'includes/head.php';
                   <div class="form-group row">
                     <div class="col-sm-2">Marks Per Qustion</div>
                     <div class="col-sm-10">
-                      <input type="number" class="form-control" placeholder="Marks Per Qustion">
+                      <input type="number" name="custom_mark" class="form-control" placeholder="Marks Per Question"
+                        required>
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col-sm-2">Negative Marking</div>
                     <div class="col-sm-10">
-                      <input type="number" class="form-control" placeholder="Negative Marking">
+                      <input type="number" step="any" name="negative_mark" class="form-control" value="0"
+                        placeholder="Negative Marking" required>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-2">Exam Duration(Minutes)</div>
+                    <div class="col-sm-10">
+                      <input type="number" name="duration" class="form-control" placeholder="Exam Duration in minutes"
+                        required>
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <div class="col-sm-10">
-                      <button type="submit" class="btn btn-primary">Create Exam</button>
+                      <button type="submit" name="create_exam" class="btn btn-primary btn-lg">Create Exam</button>
                     </div>
                   </div>
                 </form>
