@@ -57,8 +57,9 @@ include 'includes/head.php';
                           while($row = mysqli_fetch_array($search_subject)){
                             ?>
                         <div class="col-sm-3">
+                          <label for="" class="text-dark"><?=$row['subject']?></label>
                           <input type="number" name="<?=$row['id']?>" class="form-control"
-                            placeholder="<?=$row['subject']?>" value="1">
+                            placeholder="<?=$row['subject']?>" value="0">
                         </div>
                         <?php
                           }

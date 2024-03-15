@@ -343,7 +343,7 @@ include 'includes/head.php';
                       ?></p> <br>
                   <p class="badge badge-rounded badge-outline-dark">Biology</p>
                   <div class="my-2">
-                    <a href="result.php?Solution=<?=$exam_id?>"><button class="btn btn-primary mr-2">View
+                    <a href="result.php?Custom-Solution=<?=$exam_id?>"><button class="btn btn-primary mr-2">View
                         Solution</button></a>
                   </div>
                 </div>

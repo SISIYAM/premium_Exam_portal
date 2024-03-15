@@ -231,6 +231,7 @@ if(isset($_GET['Exams'])){
           $givenExamId = $givenExamRow['exam_id'];
           
           $select = mysqli_query($con, "SELECT * FROM exam WHERE exam_id='$givenExamId' ORDER BY id DESC");
+          $selectCustomExam = mysqli_query($con, "SELECT * FROM custom_exam WHERE exam_id='$givenExamId' ORDER BY id DESC");
           if(mysqli_num_rows($select) > 0){
          
               $row = mysqli_fetch_array($select);
@@ -291,6 +292,59 @@ if(isset($_GET['Exams'])){
         </div>
         <?php
           }
+        // Custom exam
+          if(mysqli_num_rows($selectCustomExam)){
+            $customRow = mysqli_fetch_array($selectCustomExam);
+            $examID = $customRow['exam_id'];
+            $duration = $customRow['duration'];
+            ?>
+        <div class="col-xl-4 col-xxl-6 col-lg-6 col-sm-6">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title"><?=$customRow['exam_name']?></h5>
+
+            </div>
+            <div class="card-body">
+              <div class="card-text">
+                <p class="badge badge-rounded badge-outline-dark">MCQ Marks: <?=$customRow['mcq_marks']?></p> <br>
+
+                <p class="badge badge-rounded badge-outline-dark">Exam Date: <?=$customRow['exam_start']?>
+                </p>
+                <br>
+                <p class="badge badge-rounded badge-outline-dark">Exam Duration: <?php
+                    if(((int)($duration/3600)) == 0 && ((int)($duration%3600)/60) != 0 && (($duration%3600)%60) != 0){
+                      echo ((int)(($duration%3600)/60)." min ".(($duration%3600)%60)." Sec");
+                    }elseif (((int)($duration/3600)) != 0 && ((int)($duration%3600)/60) != 0 && (($duration%3600)%60) == 0) {
+                      echo ((int)($duration/3600)." hour ".(int)(($duration%3600)/60)." min " );
+                    }elseif (((int)($duration/3600)) == 0 && (($duration%3600)%60) == 0 && ((int)($duration%3600)/60) != 0) {
+                      echo ((int)(($duration%3600)/60)." min " );
+                    }elseif (((int)($duration/3600)) != 0 && ((int)($duration%3600)/60) == 0 && (($duration%3600)%60)==0) {
+                      echo ((int)($duration/3600)." hour ");
+                    } else{
+                      echo ((int)($duration/3600)." hour ".(int)(($duration%3600)/60)." min ".(($duration%3600)%60)." Sec");
+                    }
+                    ?></p>
+                <br>
+
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="my-2">
+                <a href="result.php?Custom-Exam-History=<?=$customRow['exam_id']?>"><button
+                    class="btn btn-dark mr-2">View
+                    Result
+                  </button></a>
+                <span class="float-right badge badge-sm badge-secondary">Custom Exam</span>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <?php
+          }
+
+          
         }
         ?>
       </div>
