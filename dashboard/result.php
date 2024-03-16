@@ -210,7 +210,7 @@ include 'includes/head.php';
                   <div class="my-2">
                     <a href="result.php?Solution=<?=$exam_id?>"><button class="btn btn-primary mr-2">View
                         Solution</button></a>
-                    <a href="result.php?Leader-Board=<?=$exam_id?>"> <button class="btn btn-dark my-2">Leader
+                    <a href="leaderboard.php?Leader-Board=<?=$exam_id?>"> <button class="btn btn-dark my-2">Leader
                         Board</button></a>
                   </div>
                 </div>

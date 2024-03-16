@@ -283,7 +283,7 @@ if(isset($_GET['Exams'])){
                 <a href="result.php?Exam-History=<?=$row['exam_id']?>"><button class="btn btn-dark mr-2">View
                     Result
                   </button></a>
-                <a href="result.php?Leader-Board=<?=$row['exam_id']?>"><button class="btn btn-primary my-2">Leader
+                <a href="leaderboard.php?Leader-Board=<?=$row['exam_id']?>"><button class="btn btn-primary my-2">Leader
                     Board</button></a>
               </div>
 
