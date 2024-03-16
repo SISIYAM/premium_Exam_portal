@@ -15,7 +15,16 @@ if(isset($_POST['registerAdminBtn'])){
     $userCount = mysqli_num_rows($userQuery);
 
     if($userCount > 0){
-     $_SESSION['errorMsg'] = "This Username Already Exists, Please Use Another Username";
+      ?>
+<script>
+Swal.fire({
+  icon: "warning",
+  title: "This username already exist, Please use another username",
+}).then(() => {
+  location.replace("login.php?register");
+});
+</script>
+<?php 
     }else{
       $emailQuery = " select * from admin where email= '$email'";
       $query = mysqli_query($con,$emailQuery);
@@ -23,7 +32,16 @@ if(isset($_POST['registerAdminBtn'])){
       $emailCount = mysqli_num_rows($query);
 
     if($emailCount > 0){
-     $_SESSION['errorMsg'] = "This Email Already Exists, Please Use Another Email";
+      ?>
+<script>
+Swal.fire({
+  icon: "warning",
+  title: "This email already exist, Please use another email.",
+}).then(() => {
+  location.replace("login.php?register");
+});
+</script>
+<?php 
     }else{
       if($password === $confirm_password){
 
@@ -33,14 +51,41 @@ if(isset($_POST['registerAdminBtn'])){
             $iQuery = mysqli_query($con, $insertQuery);
 
           if($iQuery){
-            $_SESSION['msg'] = "Congratulations ".$username."! Your account created successfully";
+            ?>
+<script>
+Swal.fire({
+  icon: "success",
+  title: "Congratulations <?=$username?>! Your account created successfully. Now you can log in!",
+}).then(() => {
+  location.replace("login.php?login");
+});
+</script>
+<?php
           }else{
-            $_SESSION['errorMsg'] = "Registration Failed";    
+            ?>
+<script>
+Swal.fire({
+  icon: "error",
+  title: "Registration Failed",
+}).then(() => {
+  location.replace("login.php?register");
+});
+</script>
+<?php    
           }
 
       }else{
 
-        $_SESSION['errorMsg'] = "Password and confirm password do not match";
+        ?>
+<script>
+Swal.fire({
+  icon: "warning",
+  title: "Password and confirm password doesn't matched!",
+}).then(() => {
+  location.replace("login.php?register");
+});
+</script>
+<?php 
 
           }
     }
@@ -76,11 +121,29 @@ location.replace("index.php");
 </script>
 <?php
          }else{
-          $_SESSION['errorMsg'] = "Incorrect Password";
+          ?>
+<script>
+Swal.fire({
+  icon: "error",
+  title: "Incorrect Password!",
+}).then(() => {
+  location.replace("login.php?login");
+});
+</script>
+<?php 
          }
 
      }else{
-      $_SESSION['errorMsg'] = "Invalid Username";
+      ?>
+<script>
+Swal.fire({
+  icon: "warning",
+  title: "Invalid Username!",
+}).then(() => {
+  location.replace("login.php?login");
+});
+</script>
+<?php 
      }
 
 }

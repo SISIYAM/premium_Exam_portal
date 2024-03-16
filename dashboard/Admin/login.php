@@ -1,90 +1,64 @@
 <?php 
 session_start();
-include 'includes/dbcon.php';
-include 'includes/code.php';
+include './includes/dbcon.php';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 
 <head>
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link href="img/logo/logo.png" rel="icon">
-  <title>Admin - Login</title>
-  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-  <link href="../css/ruang-admin.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin-Login</title>
+  <!-- Favicon icon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+  <link rel="stylesheet" href="./vendor/owl-carousel/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="./vendor/owl-carousel/css/owl.theme.default.min.css">
+  <!-- Datatable -->
+  <link href="../vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link href="../vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
 
 </head>
 
-<body class="bg-gradient-login">
-  <!-- Login Content -->
-  <div class="container-login">
-    <div class="row justify-content-center">
-      <div class="col-xl-6 col-lg-12 col-md-9">
-        <div class="card shadow-sm my-5">
-          <div class="card-body p-0">
-            <div class="row">
-              <div class="col-lg-12">
-
-                <?php
-              if(isset($_GET['login'])){
-                ?>
-                <div class="login-form">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Admin Login</h1>
-                    <?php
-                    if(isset($_SESSION['errorMsg'])){
-                      ?>
-                    <p class="alert alert-danger"><?=$_SESSION['errorMsg']?></p>
-                    <?php
-                    unset($_SESSION['errorMsg']);
-                    }
-                    ?>
-                  </div>
-                  <form action="" class="user" method="post">
+<body class="h-100">
+  <div class="authincation h-100">
+    <div class="container-fluid h-100">
+      <div class="row justify-content-center h-100 align-items-center">
+        <div class="col-md-6">
+          <div class="authincation-content">
+            <div class="row no-gutters">
+              <div class="col-xl-12">
+                <?php 
+                if(isset($_GET['login'])){
+                  ?>
+                <div class="auth-form">
+                  <h4 class="text-center mb-4">Sign in your account</h4>
+                  <form action="" method="post">
                     <div class="form-group">
+                      <label><strong>Username</strong></label>
                       <input type="text" class="form-control" placeholder="Enter username" name="username">
                     </div>
                     <div class="form-group">
+                      <label><strong>Password</strong></label>
                       <input type="password" class="form-control" placeholder="Password" name="password">
                     </div>
+                    <div class="form-row d-flex justify-content-between mt-4 mb-2">
 
-                    <div class="form-group">
-                      <button type="submit" name="adminLoginBtn" class="btn btn-primary btn-block">Login</button>
+                      <div class="form-group">
+                        <a href="page-forgot-password.html">Forgot Password?</a>
+                      </div>
                     </div>
-
                     <div class="text-center">
+                      <button type="submit" name="adminLoginBtn" class="btn btn-primary btn-block">Sign me in</button>
                     </div>
+                  </form>
                 </div>
                 <?php
-              }elseif (isset($_GET['register'])) {
-                ?>
-                <div class="login-form">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Register</h1>
-                    <?php 
-                    if(isset($_SESSION['msg'])){
-                      ?>
-                    <p class="alert alert-success"><?=$_SESSION['msg']?></p>
-                    <?php
-                    unset($_SESSION['msg']);
-                    }
-
-                    if(isset($_SESSION['errorMsg'])){
-                      ?>
-                    <p class="alert alert-danger"><?=$_SESSION['errorMsg']?></p>
-                    <?php
-                    unset($_SESSION['errorMsg']);
-                    }
-                    
-                    ?>
-
-                  </div>
+                }elseif(isset($_GET['register'])){
+                  ?>
+                <div class="auth-form">
+                  <h4 class="text-center mb-4">Sign up your account</h4>
                   <form action="" method="post">
                     <div class="form-group">
                       <label>Full Name</label>
@@ -111,15 +85,16 @@ include 'includes/code.php';
                       <input type="password" class="form-control" name="confirm_password"
                         id="exampleInputPasswordConfirm" placeholder="Confirm Password" required>
                     </div>
-                    <div class="form-group">
-                      <button type="submit" name="registerAdminBtn" class="btn btn-primary btn-block">Register</button>
+                    <div class="text-center mt-4">
+                      <button type="submit" name="registerAdminBtn" class="btn btn-primary btn-block">Sign me
+                        up</button>
                     </div>
                   </form>
+
                 </div>
                 <?php
-              }
-              ?>
-
+                }
+                ?>
               </div>
             </div>
           </div>
@@ -127,11 +102,10 @@ include 'includes/code.php';
       </div>
     </div>
   </div>
-  <!-- Login Content -->
-  <script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script src="../js/ruang-admin.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <?php include './includes/code.php'; ?>
+
 </body>
 
 </html>
