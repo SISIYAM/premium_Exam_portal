@@ -297,6 +297,7 @@ if(isset($_GET['Exams'])){
             $customRow = mysqli_fetch_array($selectCustomExam);
             $examID = $customRow['exam_id'];
             $duration = $customRow['duration'];
+            $totalQuestions = $givenExamRow['wrong_answered'] + $givenExamRow['right_answered'] + $givenExamRow['not_answered'];
             ?>
         <div class="col-xl-4 col-xxl-6 col-lg-6 col-sm-6">
           <div class="card">
@@ -307,7 +308,8 @@ if(isset($_GET['Exams'])){
             <div class="card-body">
               <div class="card-text">
                 <p class="badge badge-rounded badge-outline-dark">MCQ Marks: <?=$customRow['mcq_marks']?></p> <br>
-
+                <p class="badge badge-rounded badge-outline-dark">Number Of Questions: <?=$totalQuestions?></p>
+                <br>
                 <p class="badge badge-rounded badge-outline-dark">Exam Date: <?=$customRow['exam_start']?>
                 </p>
                 <br>
@@ -325,6 +327,9 @@ if(isset($_GET['Exams'])){
                     }
                     ?></p>
                 <br>
+                <br>
+                <br>
+                <br>
 
               </div>
             </div>
@@ -334,6 +339,7 @@ if(isset($_GET['Exams'])){
                     class="btn btn-dark mr-2">View
                     Result
                   </button></a>
+
                 <span class="float-right badge badge-sm badge-secondary">Custom Exam</span>
 
               </div>

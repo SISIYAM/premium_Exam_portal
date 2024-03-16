@@ -103,6 +103,13 @@ include 'includes/head.php';
                   if(mysqli_num_rows($showResult) > 0){
                     $showResultRow = mysqli_fetch_array($showResult);
                     ?>
+
+        <!-- Pie chart section value -->
+        <input type="hidden" id="total_mark" value="<?=$showResultRow['result']?>">
+        <input type="hidden" id="right_answer" value="<?=$showResultRow['right_answered']?>">
+        <input type="hidden" id="wrong_answer" value="<?=$showResultRow['wrong_answered']?>">
+        <input type="hidden" id="not_answer" value="<?=$showResultRow['not_answered']?>">
+
         <div class="col-lg-3 col-sm-6">
           <div class="card">
             <div class="stat-widget-two card-body">
@@ -246,6 +253,12 @@ include 'includes/head.php';
                   if(mysqli_num_rows($showResult) > 0){
                     $showResultRow = mysqli_fetch_array($showResult);
                     ?>
+        <!-- Pie chart section value -->
+        <input type="hidden" id="total_mark" value="<?=$showResultRow['result']?>">
+        <input type="hidden" id="right_answer" value="<?=$showResultRow['right_answered']?>">
+        <input type="hidden" id="wrong_answer" value="<?=$showResultRow['wrong_answered']?>">
+        <input type="hidden" id="not_answer" value="<?=$showResultRow['not_answered']?>">
+
         <div class="col-lg-3 col-sm-6">
           <div class="card">
             <div class="stat-widget-two card-body">
@@ -515,6 +528,7 @@ include 'includes/head.php';
                   }
                   ?>
           <?php
+          $i++;
             }
           }
           ?>
@@ -719,6 +733,10 @@ include 'includes/head.php';
   <script src="./vendor/morris/morris.min.js"></script>
   <!-- <script src="./js/plugins-init/morris-init.js"></script>  -->
   <script>
+  let total_mark = $('#total_mark').val();
+  let right_answer = $('#right_answer').val();
+  let wrong_answer = $('#wrong_answer').val();
+  let not_answer = $('#not_answer').val();
   (function($) {
     "use strict"
 
@@ -726,18 +744,24 @@ include 'includes/head.php';
     Morris.Donut({
       element: 'morris_donught',
       data: [{
-        label: "\xa0 \xa0 Total marks \xa0 \xa0",
-        value: 12,
+          label: "\xa0 \xa0 Total marks \xa0 \xa0",
+          value: total_mark,
 
-      }, {
-        label: "\xa0 \xa0 Wrong Answer \xa0 \xa0",
-        value: 30
-      }, {
-        label: "\xa0 \xa0 Not Answered \xa0 \xa0",
-        value: 20
-      }],
+        },
+        {
+          label: "\xa0 \xa0 Right Answered \xa0 \xa0",
+          value: right_answer,
+
+        }, {
+          label: "\xa0 \xa0 Wrong Answered \xa0 \xa0",
+          value: wrong_answer
+        }, {
+          label: "\xa0 \xa0 Not Answered \xa0 \xa0",
+          value: not_answer
+        }
+      ],
       resize: true,
-      colors: ['#75B432', 'rgb(192, 10, 39)', '#4400eb']
+      colors: ['#7ED321', '#593bdb', '#FFAA16', '#FF1616']
     });
 
 
