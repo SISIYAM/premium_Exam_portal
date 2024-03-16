@@ -53,11 +53,24 @@ if(isset($_POST['searchExamInformation'])){
   $search = mysqli_query($con,"SELECT * FROM exam WHERE id ='$id'");
   if(mysqli_num_rows($search) > 0){
      $row = mysqli_fetch_array($search);
+     if($row['type'] == 1){ 
+      $examType = '<option selected value="1">Live Exam</option>
+      <option  value="0">Practice Exam</option>';
+     }else{
+      $examType = '<option selected value="0">Practice Exam</option>
+      <option  value="1">Live Exam</option>';
+     }
      $output = ' 
      <input type="hidden" value="'.$row['id'].'" id="exam_edit_id">
    <label for="email">Exam Name: </label>
      <div class="form-group">
        <input type="text" value="'.$row['exam_name'].'" id="examName" class="form-control">
+     </div>
+     <label for="email">Exam Type: </label>
+     <div class="form-group">
+       <select name="type" id="examType" class="form-control">
+       '.$examType.'
+       </select>
      </div>
      <label for="name">Exam Start Date: </label>
      <div class="form-group">
@@ -152,8 +165,11 @@ if(isset($_POST['updateExam'])){
   $mcq_marks = $_POST['mcq_marks'];
   $written_marks = $_POST['written_marks'];
   $duration = $_POST['duration'];
+  $exam_type = $_POST['exam_type'];
   
-  $sql = mysqli_query($con, "UPDATE exam SET exam_name='$exam_name', duration='$duration', exam_start='$exam_date', exam_start_time='$exam_start_time', exam_end='$exam_end', exam_end_time='$exam_end_time', mcq_marks='$mcq_marks',written_marks='$written_marks' WHERE id='$exam_id'");
+  $sql = mysqli_query($con, "UPDATE exam SET exam_name='$exam_name', duration='$duration', exam_start='$exam_date',
+   exam_start_time='$exam_start_time', exam_end='$exam_end', exam_end_time='$exam_end_time', mcq_marks='$mcq_marks',
+   written_marks='$written_marks',type='$exam_type' WHERE id='$exam_id'");
   if($sql){
     echo 200;
   }else{

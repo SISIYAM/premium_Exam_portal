@@ -57,6 +57,7 @@ $(document).ready(function () {
         mcq_marks: mcq_marks,
         written_marks: written_marks,
         duration: exam_duration,
+        exam_type: exam_type,
         updateExam: "updateExam",
       },
       success: function (response) {
