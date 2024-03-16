@@ -185,10 +185,9 @@ include 'includes/head.php';
         <div class="modal-content">
           <form action="" method="post">
             <div class="modal-body" id="examModalContent">
-
-
             </div>
           </form>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
               <i class="bx bx-x d-block d-sm-none"></i>
@@ -294,7 +293,11 @@ include 'includes/head.php';
                     <th>Name</th>
                     <th>Username</th>
                     <th></th>
-                    <th></th>
+                    <?php
+                    if($_SESSION['post'] == 1){
+                      echo "<th></th>";
+                    }
+                    ?>
                   </tr>
                 </thead>
                 <tbody>
@@ -313,9 +316,15 @@ include 'includes/head.php';
                         View
                       </button>
                     </td>
+                    <?php
+                   if($_SESSION['post'] == 1){
+                    ?>
                     <td>
                       <button value="<?=$row['id']?>" class="badge bg-danger border-0 deleteStudentBtn">Delete</button>
                     </td>
+                    <?php
+                   }
+                   ?>
                   </tr>
                   <?php
                   $no++;
@@ -374,7 +383,11 @@ include 'includes/head.php';
             <h5 class="card-title">
               Teachers List
             </h5>
+            <?php if($_SESSION['post'] == 1){
+            ?>
             <a href="login.php?register"><button class="btn btn-primary btn-lg">Add Teachers</button></a>
+            <?php
+           } ?>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -548,6 +561,7 @@ include 'includes/head.php';
             <h5 class="card-title">
               Subjects List
             </h5>
+            <a href="list.php?Chapters"><button class="btn btn-success">View Chapters</button></a>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -582,6 +596,77 @@ include 'includes/head.php';
                         data-bs-toggle="modal" data-bs-target="#examEditModal">Edit</button></td>
                     <td><button value="<?=$row['id']?>"
                         class="badge bg-danger border-0 deleteSubjectBtn">Delete</button>
+                    </td>
+                  </tr>
+                  <?php
+                    }
+                  }else{
+                    ?>
+                  <tr>
+
+                    <p class="alert alert-danger"> No Result Found!</p>
+
+                  </tr>
+                  <?php
+                  }
+                  ?>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </section>
+      <!-- Basic Tables end -->
+    </div>
+    <?php
+    }elseif (isset($_GET['Chapters'])) {
+      ?>
+    <div class="page-heading">
+      <!-- Basic Tables start -->
+      <section class="section">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">
+              Chapters List
+            </h5>
+            <a href="add.php?Chapters"><button type="button" class="btn btn-primary">Add
+                Chapters</button></a>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <?php
+                  $no = 0;
+                  $select = mysqli_query($con, "SELECT * FROM chapter");
+                  if(mysqli_num_rows($select) > 0){
+                    ?>
+
+              <table class="table" id="table1" style="font-size:14px">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Subject Name</th>
+                    <th>Chapter Name</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  while($row = mysqli_fetch_array($select)){
+                  $no ++;
+                  $subject_id = $row['subject_id'];
+                  ?>
+                  <tr>
+                    <td><?=$no?></td>
+                    <td><?php
+                     echo mysqli_fetch_array(mysqli_query($con, "SELECT * FROM subjects WHERE id='$subject_id'"))['subject'];
+                    ?></td>
+                    <td><?=$row['name'];?></td>
+
+                    <td><button value="<?=$row['id']?>" class="badge bg-primary border-0 editChapterBtn"
+                        data-bs-toggle="modal" data-bs-target="#examEditModal">Edit</button></td>
+                    <td><button value="<?=$row['id']?>"
+                        class="badge bg-danger border-0 deleteChapterBtn">Delete</button>
                     </td>
                   </tr>
                   <?php

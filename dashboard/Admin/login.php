@@ -80,7 +80,7 @@ include './includes/dbcon.php';
                       <label>Post</label>
                       <select name="post" id="" class="form-control" required>
                         <option value="0">Teacher</option>
-                        <option value="1">Teacher</option>
+                        <option value="1">Admin</option>
                       </select>
                     </div>
                     <div class="form-group">

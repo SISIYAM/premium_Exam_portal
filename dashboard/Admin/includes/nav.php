@@ -45,7 +45,7 @@
 
 
           <li class="sidebar-item active ">
-            <a href="profile.php" class='sidebar-link'>
+            <a href="javascript:void(0)" class='sidebar-link'>
               <i class="bi bi-person-fill"></i>
               <span><?=$_SESSION['username']?>- <?php
               if($_SESSION['post'] == 1){

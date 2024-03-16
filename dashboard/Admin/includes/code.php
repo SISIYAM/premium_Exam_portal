@@ -230,7 +230,7 @@ location.replace("list.php?Questions");
     }
 }
 
-// add Written Question
+// add subjects
 if(isset($_POST['addSubject'])){
   $changeSubject = $_POST['subject'];
   $subject = str_replace("'","\'", $changeSubject);
@@ -251,12 +251,43 @@ location.replace("list.php?Subjects");
       $_SESSION['replace_url'] = "add.php?Subjects";
       ?>
 <script>
-location.replace("list.php?Questions");
+location.replace("list.php?Subjects");
 </script>
 <?php
   
     }
 }
+
+
+// add chapters
+if(isset($_POST['addChapter'])){
+  $subject_id = $_POST['subject_id'];
+  $changeChapter = $_POST['name'];
+  $Chapter = str_replace("'","\'", $changeChapter);
+
+    $sql = "INSERT INTO `chapter`(`subject_id`,`name`)
+    VALUES ('$subject_id','$Chapter')";
+    $query = mysqli_query($con, $sql);
+  
+    if ($query) {
+      $_SESSION['message'] = "Success";
+      ?>
+<script>
+location.replace("list.php?Chapters");
+</script>
+<?php
+    } else {
+      $_SESSION['error'] = "Failed";
+      $_SESSION['replace_url'] = "add.php?Chapters";
+      ?>
+<script>
+location.replace("list.php?Chapters");
+</script>
+<?php
+  
+    }
+}
+
 // deactivate teachers
 if(isset($_POST['teacherDeactivateBtn'])){
   $id = $_POST['id'];

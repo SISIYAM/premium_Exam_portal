@@ -60,4 +60,16 @@ if(isset($_POST['deleteSubjectBtn'])){
     echo 500;
   }
 }
+
+// delete chapter
+if(isset($_POST['deleteChapterBtn'])){
+  $id = $_POST['id'];
+  
+  $delete = mysqli_query($con, "DELETE FROM chapter WHERE id='$id'");
+  if($delete){
+    echo 200;
+  }else{
+    echo 500;
+  }
+}
 ?>

@@ -365,6 +365,66 @@
         </div>
     </div>
     <?php
+    }elseif (isset($_GET['Chapters'])) {
+      ?>
+    <div class="page-heading">
+
+      <!-- Basic Vertical form layout section start -->
+      <section id="basic-vertical-layouts">
+        <div class="row match-height">
+          <div class="">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Add Chapters</h4>
+              </div>
+              <div class="card-content">
+                <div class="card-body">
+                  <form class="form form-vertical" action="" method="POST" enctype="multipart/form-data">
+                    <div class="form-body">
+                      <div class="row">
+
+                        <div class="form-group col-12">
+                          <label for="">Subject*</label>
+                          <select class="form-select" aria-label=".form-select-sm example" name="subject_id">
+                            <option value="">Select Subject</option>
+                            <?php
+                              $selectSubject = mysqli_query($con, "SELECT * FROM subjects");
+                              if(mysqli_num_rows($selectSubject) > 0){
+                                while($SubjectRow = mysqli_fetch_array($selectSubject)){
+                                  ?>
+                            <option value="<?=$SubjectRow['id']?>"><?=$SubjectRow['subject']?></option>
+                            <?php
+                                }
+                              }
+                              ?>
+
+                          </select>
+
+                        </div>
+                        <div class="form-group">
+                          <label for="first-name-vertical">Chapter Name<span>*</span></label>
+                          <input type="text" id="first-name-vertical" class="form-control" name="name"
+                            placeholder="Chapter 1" required>
+                        </div>
+
+
+
+                        <div class="col-12 d-flex justify-content-end">
+                          <button type="submit" name="addChapter" class="btn btn-primary me-1 mb-1">Add
+                          </button>
+                          <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div>
+    <?php
     }elseif(isset($_GET['Update-Questions'])){
       $question_id = $_GET['Update-Questions'];
       ?>
