@@ -4,6 +4,7 @@ if(isset($_POST['registerAdminBtn'])){
   $full_name = mysqli_real_escape_string($con, $_POST['full_name']) ;
   $username = mysqli_real_escape_string($con, $_POST['username']) ;
   $email = mysqli_real_escape_string($con, $_POST['email']) ;
+  $post = mysqli_real_escape_string($con, $_POST['post']) ;
   $password = mysqli_real_escape_string($con, $_POST['password']) ;
   $confirm_password = mysqli_real_escape_string($con, $_POST['confirm_password']) ;
 
@@ -45,8 +46,8 @@ Swal.fire({
     }else{
       if($password === $confirm_password){
 
-          $insertQuery = "INSERT INTO `admin` ( `full_name`, `username`, `email`, `password`, `confirm_password`)
-          VALUES ( '$full_name', '$username', '$email', '$pass', '$cpass')";
+          $insertQuery = "INSERT INTO `admin` ( `full_name`, `username`, `email`,`post`, `password`, `confirm_password`)
+          VALUES ( '$full_name', '$username', '$email','$post', '$pass', '$cpass')";
 
             $iQuery = mysqli_query($con, $insertQuery);
 
@@ -230,29 +231,24 @@ location.replace("list.php?Questions");
 }
 
 // add Written Question
-if(isset($_POST['addWrittenQuestion'])){
-  $exam_id = $_POST['exam_id'];
-  $marks = $_POST['marks'];
-  $changeQuestion = $_POST['question'];
-  $question = str_replace("'","\'", $changeQuestion);
-  $changeSolution = $_POST['solution'];
-  $solution = str_replace("'","\'", $changeSolution);
-  $added_by = $_SESSION['username'];
-  
-    $sql = "INSERT INTO `written_questions`(`exam_id`,`question`, `mark`,`solution`,`added_by`)
-    VALUES ('$exam_id','$question','$marks','$solution','$added_by')";
+if(isset($_POST['addSubject'])){
+  $changeSubject = $_POST['subject'];
+  $subject = str_replace("'","\'", $changeSubject);
+
+    $sql = "INSERT INTO `subjects`(`subject`)
+    VALUES ('$subject')";
     $query = mysqli_query($con, $sql);
   
     if ($query) {
-      $_SESSION['written_message'] = "Success";
+      $_SESSION['message'] = "Success";
       ?>
 <script>
-location.replace("list.php?Questions");
+location.replace("list.php?Subjects");
 </script>
 <?php
     } else {
       $_SESSION['error'] = "Failed";
-      $_SESSION['replace_url'] = "add.php?Written-Question";
+      $_SESSION['replace_url'] = "add.php?Subjects";
       ?>
 <script>
 location.replace("list.php?Questions");

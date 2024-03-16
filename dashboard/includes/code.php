@@ -198,6 +198,10 @@ Swal.fire({
     
      $insertResult = mysqli_query($con, "INSERT INTO result (`student_id`, `exam_id`, `result`, `answered`, `wrong_answered`, `right_answered`, `not_answered`) 
      VALUES ('$insertStudentID','$exam_id','$result','$totalAnswered','$wrong','$right','$noAns')");
+
+     $insertLeaderBoard = mysqli_query($con, "INSERT INTO leaderboard (`student_id`, `exam_id`, `result`) 
+     VALUES ('$insertStudentID','$exam_id','$result')");
+
     if($insertResult){ 
      ?>
 <script>

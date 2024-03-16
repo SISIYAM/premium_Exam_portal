@@ -155,13 +155,15 @@ if(isset($_GET['Exams'])){
                         ?>
                 <a href="exam.php?Exam-ID=<?=$row['exam_id']?>"><button class="btn btn-primary mr-2">Start
                   </button></a>
-                <a href="result.php?Leader-Board=<?=$row['exam_id']?>"><button class="btn btn-info my-2 mx-2">Leader
+                <a href="leaderboard.php?Leader-Board=<?=$row['exam_id']?>"><button
+                    class="btn btn-info my-2 mx-2">Leader
                     Board</button></a>
                 <?php
                       }elseif($current_time >= $examEndTimestamp){
                         ?>
                 <button class="btn btn-light btn-sm">Finished</button>
-                <a href="result.php?Leader-Board=<?=$row['exam_id']?>"><button class="btn btn-info my-2 mx-2">Leader
+                <a href="leaderboard.php?Leader-Board=<?=$row['exam_id']?>"><button
+                    class="btn btn-info my-2 mx-2">Leader
                     Board</button></a>
                 <?php
                       }
@@ -181,13 +183,15 @@ if(isset($_GET['Exams'])){
                           ?>
                 <a href="exam.php?Exam-ID=<?=$row['exam_id']?>"><button class="btn btn-primary mr-2">Start
                   </button></a>
-                <a href="result.php?Leader-Board=<?=$row['exam_id']?>"><button class="btn btn-info my-2 mx-2">Leader
+                <a href="leaderboard.php?Leader-Board=<?=$row['exam_id']?>"><button
+                    class="btn btn-info my-2 mx-2">Leader
                     Board</button></a>
                 <?php
                         }elseif($current_time >= $examEndTimestamp){
                           ?>
                 <button class="btn btn-light btn-sm">Finished</button>
-                <a href="result.php?Leader-Board=<?=$row['exam_id']?>"><button class="btn btn-info my-2 mx-2">Leader
+                <a href="leaderboard.php?Leader-Board=<?=$row['exam_id']?>"><button
+                    class="btn btn-info my-2 mx-2">Leader
                     Board</button></a>
                 <?php
                         }

@@ -57,9 +57,9 @@
             </a>
           </li>
           <li class="sidebar-item ">
-            <a href="profile.php" class='sidebar-link'>
+            <a href="javascript:void(0)" class='sidebar-link'>
               <i class="bi bi-person-circle"></i>
-              <span>Profile</span>
+              <span>Change Password</span>
             </a>
           </li>
           <li class="sidebar-item ">

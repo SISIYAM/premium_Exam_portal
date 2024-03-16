@@ -374,6 +374,7 @@ include 'includes/head.php';
             <h5 class="card-title">
               Teachers List
             </h5>
+            <a href="login.php?register"><button class="btn btn-primary btn-lg">Add Teachers</button></a>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -685,21 +686,6 @@ include 'includes/head.php';
   </script>
   <?php
   unset($_SESSION['mcq_message']);
-  }
-
-  // written question
-  if (isset($_SESSION['written_message'])) {
-    ?>
-  <script>
-  Swal2.fire({
-    icon: "success",
-    title: "Added Successfully!",
-  }).then(() => {
-    location.replace("add.php?Written-Question");
-  });
-  </script>
-  <?php
-  unset($_SESSION['written_message']);
   }
 
   ?>

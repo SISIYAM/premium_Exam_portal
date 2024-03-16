@@ -33,7 +33,7 @@ include './includes/dbcon.php';
                 if(isset($_GET['login'])){
                   ?>
                 <div class="auth-form">
-                  <h4 class="text-center mb-4">Sign in your account</h4>
+                  <h4 class="text-center mb-4">Admin & Teachers Login</h4>
                   <form action="" method="post">
                     <div class="form-group">
                       <label><strong>Username</strong></label>
@@ -56,9 +56,10 @@ include './includes/dbcon.php';
                 </div>
                 <?php
                 }elseif(isset($_GET['register'])){
-                  ?>
+                  if($_SESSION['post'] == 1){
+                    ?>
                 <div class="auth-form">
-                  <h4 class="text-center mb-4">Sign up your account</h4>
+                  <h4 class="text-center mb-4">Add Teachers & Admins</h4>
                   <form action="" method="post">
                     <div class="form-group">
                       <label>Full Name</label>
@@ -76,6 +77,13 @@ include './includes/dbcon.php';
                         aria-describedby="emailHelp" placeholder="Enter Email Address" required>
                     </div>
                     <div class="form-group">
+                      <label>Post</label>
+                      <select name="post" id="" class="form-control" required>
+                        <option value="0">Teacher</option>
+                        <option value="1">Teacher</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
                       <label>Password</label>
                       <input type="password" class="form-control" name="password" id="exampleInputPassword"
                         placeholder="Password" required>
@@ -86,13 +94,15 @@ include './includes/dbcon.php';
                         id="exampleInputPasswordConfirm" placeholder="Confirm Password" required>
                     </div>
                     <div class="text-center mt-4">
-                      <button type="submit" name="registerAdminBtn" class="btn btn-primary btn-block">Sign me
-                        up</button>
+                      <button type="submit" name="registerAdminBtn" class="btn btn-primary btn-block">Add</button>
                     </div>
                   </form>
 
                 </div>
                 <?php
+                  }else {
+                    echo "<p class='alert alert-danger text-light'>You Have no permission to access this page</p>";
+                  }
                 }
                 ?>
               </div>

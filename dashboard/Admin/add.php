@@ -186,9 +186,6 @@
               </div>
               <div class="card-content">
                 <div class="card-body">
-                  <a href="add.php?Written-Question">
-                    <button class="btn btn-primary btn-lg mb-3">Add Written Question</button>
-                  </a>
                   <form class="form form-vertical" action="" method="POST" enctype="multipart/form-data">
                     <div class="form-body">
                       <div class="row">
@@ -211,6 +208,26 @@
                           </select>
 
                         </div>
+
+                        <div class="form-group col-12">
+                          <label for="">Subject*</label>
+                          <select class="form-select" aria-label=".form-select-sm example" name="exam_id">
+                            <option value="">Select Subject</option>
+                            <?php
+                              $selectSubject = mysqli_query($con, "SELECT * FROM subjects");
+                              if(mysqli_num_rows($selectSubject) > 0){
+                                while($SubjectRow = mysqli_fetch_array($selectSubject)){
+                                  ?>
+                            <option value="<?=$SubjectRow['id']?>"><?=$SubjectRow['subject']?></option>
+                            <?php
+                                }
+                              }
+                              ?>
+
+                          </select>
+
+                        </div>
+
                         <div class="form-group">
                           <label for="first-name-vertical">Marks <span>*</span></label>
                           <input type="text" id="first-name-vertical" class="form-control" name="marks"
@@ -306,7 +323,7 @@
         </div>
     </div>
     <?php
-    }elseif (isset($_GET['Written-Question'])) {
+    }elseif (isset($_GET['Subjects'])) {
       ?>
     <div class="page-heading">
 
@@ -316,63 +333,25 @@
           <div class="">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Add Questions</h4>
+                <h4 class="card-title">Add Subjects</h4>
               </div>
               <div class="card-content">
                 <div class="card-body">
-                  <a href="add.php?Questions">
-                    <button class="btn btn-success btn-lg mb-3">Add MCQ Question</button>
-                  </a>
                   <form class="form form-vertical" action="" method="POST" enctype="multipart/form-data">
                     <div class="form-body">
                       <div class="row">
 
-                        <div class="form-group col-12">
-                          <label for="">Exam*</label>
-                          <select class="form-select" aria-label=".form-select-sm example" name="exam_id">
-                            <option value="">Select Exam</option>
-                            <?php
-                              $select = mysqli_query($con, "SELECT * FROM exam");
-                              if(mysqli_num_rows($select) > 0){
-                                while($row = mysqli_fetch_array($select)){
-                                  ?>
-                            <option value="<?=$row['exam_id']?>"><?=$row['exam_name']?></option>
-                            <?php
-                                }
-                              }
-                              ?>
-
-                          </select>
-
-                        </div>
                         <div class="form-group">
-                          <label for="first-name-vertical">Marks <span>*</span></label>
-                          <input type="text" id="first-name-vertical" class="form-control" name="marks"
-                            placeholder="Ex: 1" required>
-                        </div>
-
-                        <div class="col-12">
-                          <div class="form-group">
-                            <label for="question">Question <span>*</span></label>
-                            <!-- Cke question -->
-                            <textarea name="question" id="editor"></textarea>
-
-                          </div>
+                          <label for="first-name-vertical">Subject Name<span>*</span></label>
+                          <input type="text" id="first-name-vertical" class="form-control" name="subject"
+                            placeholder="Physics" required>
                         </div>
 
 
-                        <div class="col-12">
-                          <div class="form-group">
-                            <label for="question">Solution <span>(Optional)</span></label>
-                            <!-- Cke question -->
-                            <textarea name="solution" id="solution"></textarea>
-
-                          </div>
-                        </div>
 
                         <div class="col-12 d-flex justify-content-end">
-                          <button type="submit" name="addWrittenQuestion" class="btn btn-primary me-1 mb-1">Add
-                            Question</button>
+                          <button type="submit" name="addSubject" class="btn btn-primary me-1 mb-1">Add
+                            Subject</button>
                           <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
                         </div>
                       </div>
