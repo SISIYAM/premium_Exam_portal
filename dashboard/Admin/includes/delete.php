@@ -48,4 +48,16 @@ if(isset($_POST['deleteQuestionBtn'])){
     echo 500;
   }
 }
+
+// delete subject
+if(isset($_POST['deleteSubjectBtn'])){
+  $id = $_POST['id'];
+  
+  $delete = mysqli_query($con, "DELETE FROM subjects WHERE id='$id'");
+  if($delete){
+    echo 200;
+  }else{
+    echo 500;
+  }
+}
 ?>
