@@ -75,6 +75,49 @@ $(document).ready(function () {
     });
   });
 
+  // show chapter And Subject information code
+  $(".editChapterBtn").on("click", function () {
+    const chapter_id = $(this).val();
+    $.ajax({
+      type: "post",
+      url: "includes/ajax.php",
+      data: {
+        id: chapter_id,
+        searchChapterInformation: "searchChapterInformation",
+      },
+      success: function (response) {
+        $("#chapterEdit").html(response);
+      },
+    });
+  });
+
+  $("#saveChapterBtn").on("click", function () {
+    const chapter_id = $("#chapterId").val();
+    const chapterName = $("#chapterName").val();
+
+    $.ajax({
+      type: "post",
+      url: "includes/ajax.php",
+      data: {
+        id: chapter_id,
+        name: chapterName,
+        saveChapterEdit: "saveChapterEdit",
+      },
+      success: function (response) {
+        if (response == 200) {
+          Swal2.fire({
+            icon: "success",
+            title: "Updated",
+          }).then(() => {
+            location.reload();
+          });
+        } else {
+          callError();
+        }
+      },
+    });
+  });
+
   // Active deActive code start from here===============================>
 
   // deactivate teachers

@@ -46,6 +46,43 @@ if(isset($_POST['searchStudentInformation'])){
   }
 }
 
+// search chapter information
+if(isset($_POST['searchChapterInformation'])){
+  $id = $_POST['id'];
+  $output = "";
+  $search = mysqli_query($con,"SELECT * FROM chapter WHERE id ='$id'");
+  if(mysqli_num_rows($search) > 0){
+     $row = mysqli_fetch_array($search);
+     $output = ' 
+     <input value="'.$row['id'].'" type="hidden" id="chapterId">
+     <label for="email">Chapter Name: </label>
+     <div class="form-group">
+       <input type="text" id="chapterName" value="'.$row['name'].'" class="form-control">
+     </div>
+     ';
+     echo $output;
+  }
+  else{
+     $output = '<div class="alert alert-danger">No data found.</div>';
+     echo $output;
+  }
+}
+
+
+// update exam 
+if(isset($_POST['saveChapterEdit'])){
+  $chapter_id = $_POST['id'];
+  $chapter_name = $_POST['name'];
+  
+  $sql = mysqli_query($con, "UPDATE chapter SET name='$chapter_name' WHERE id='$chapter_id'");
+  if($sql){
+    echo 200;
+  }else{
+    echo 500;
+  }
+}
+
+
 // search exam information
 if(isset($_POST['searchExamInformation'])){
   $id = $_POST['id'];

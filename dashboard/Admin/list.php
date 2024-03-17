@@ -664,7 +664,7 @@ include 'includes/head.php';
                     <td><?=$row['name'];?></td>
 
                     <td><button value="<?=$row['id']?>" class="badge bg-primary border-0 editChapterBtn"
-                        data-bs-toggle="modal" data-bs-target="#examEditModal">Edit</button></td>
+                        data-bs-toggle="modal" data-bs-target="#chapterEditModal">Edit</button></td>
                     <td><button value="<?=$row['id']?>"
                         class="badge bg-danger border-0 deleteChapterBtn">Delete</button>
                     </td>
@@ -688,6 +688,27 @@ include 'includes/head.php';
 
       </section>
       <!-- Basic Tables end -->
+    </div>
+
+    <!--scrolling content Modal -->
+    <div class="modal fade" id="chapterEditModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form action="" method="post">
+            <div class="modal-body" id="chapterEdit">
+            </div>
+          </form>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+              <i class="bx bx-x d-block d-sm-none"></i>
+              <span class="d-none d-sm-block">Close</span>
+            </button>
+            <button type="button" id="saveChapterBtn" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
     </div>
     <?php
     }else {
