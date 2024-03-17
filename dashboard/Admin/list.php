@@ -54,7 +54,6 @@ include 'includes/head.php';
                     <th>Exam Date</th>
                     <th>Questions</th>
                     <th>MCQ Marks</th>
-                    <th>Written Marks</th>
                     <th>Duration</th>
                     <th>Author</th>
                     <td>Status</td>
@@ -97,7 +96,7 @@ include 'includes/head.php';
                     echo $countNumbers;
                     ?></td>
                     <td><?=$row['mcq_marks'];?></td>
-                    <td><?=$row['written_marks'];?></td>
+
                     <td>
                       <?php
                       if(((int)($duration/3600)) == 0 && ((int)($duration%3600)/60) != 0 && (($duration%3600)%60) != 0){

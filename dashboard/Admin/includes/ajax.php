@@ -129,10 +129,6 @@ if(isset($_POST['searchExamInformation'])){
      <div class="form-group">
        <input type="text" value="'.$row['mcq_marks'].'" id="mcq_marks" class="form-control">
      </div>
-     <label for="email">Written Marks: </label>
-     <div class="form-group">
-       <input type="text" value="'.$row['written_marks'].'" id="written_marks" class="form-control">
-     </div>
      <label for="email">Exam Duration(In Second): </label>
      <div class="form-group">
        <input type="text" value="'.$row['duration'].'" id="exam_duration" class="form-control">
@@ -200,13 +196,11 @@ if(isset($_POST['updateExam'])){
   $exam_end = $_POST['exam_end'];
   $exam_end_time = $_POST['exam_end_time'];
   $mcq_marks = $_POST['mcq_marks'];
-  $written_marks = $_POST['written_marks'];
   $duration = $_POST['duration'];
   $exam_type = $_POST['exam_type'];
   
   $sql = mysqli_query($con, "UPDATE exam SET exam_name='$exam_name', duration='$duration', exam_start='$exam_date',
-   exam_start_time='$exam_start_time', exam_end='$exam_end', exam_end_time='$exam_end_time', mcq_marks='$mcq_marks',
-   written_marks='$written_marks',type='$exam_type' WHERE id='$exam_id'");
+   exam_start_time='$exam_start_time', exam_end='$exam_end', exam_end_time='$exam_end_time', mcq_marks='$mcq_marks',type='$exam_type' WHERE id='$exam_id'");
   if($sql){
     echo 200;
   }else{

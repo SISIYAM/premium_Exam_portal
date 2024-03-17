@@ -79,9 +79,8 @@ include 'includes/head.php';
         $ExamRow = mysqli_fetch_array($select);
 
         $examName = $ExamRow['exam_name'];
-        $totalMarks = $ExamRow['mcq_marks'] + $ExamRow['written_marks'];
+        $totalMarks = $ExamRow['mcq_marks'];
         $mcq_marks = $ExamRow['mcq_marks'];
-        $written_marks = $ExamRow['written_marks'];
         $examStart = $ExamRow['exam_start'];
         $examEnd = $ExamRow['exam_end']; 
         $duration = $ExamRow['duration'];
@@ -174,17 +173,17 @@ include 'includes/head.php';
       <div class="row">
         <div class="col-12">
           <div class="row">
-            <div class="col-lg-6 col-sm-6">
+            <div class="col-lg-4 col-sm-6">
               <div class="card">
                 <div class="card-header">
-                  <h4 class="card-title">Your Marks</h4>
+                  <h4 class="card-title">Exam Marks</h4>
                 </div>
                 <div class="card-body">
-                  <div id="morris_donught" class="morris_chart_height"></div>
+                  <canvas id="resultChart"></canvas>
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 col-sm-6">
+            <div class="col-lg-7 col-sm-6">
               <div class="card">
                 <div class="card-header">
                   <h4 class="card-title"><?=$examName?></h4>
@@ -326,10 +325,10 @@ include 'includes/head.php';
             <div class="col-lg-6 col-sm-6">
               <div class="card">
                 <div class="card-header">
-                  <h4 class="card-title">Your Marks</h4>
+                  <h4 class="card-title">Exam Marks</h4>
                 </div>
                 <div class="card-body">
-                  <div id="morris_donught" class="morris_chart_height"></div>
+                  <canvas id="resultChart"></canvas>
                 </div>
               </div>
             </div>
@@ -728,48 +727,34 @@ include 'includes/head.php';
 
 
   <?php include("includes/footer.php"); ?>
-  <!-- Chart Morris plugin files -->
-  <script src="./vendor/raphael/raphael.min.js"></script>
-  <script src="./vendor/morris/morris.min.js"></script>
-  <!-- <script src="./js/plugins-init/morris-init.js"></script>  -->
+  <!-- Chartjs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
   let total_mark = $('#total_mark').val();
   let right_answer = $('#right_answer').val();
   let wrong_answer = $('#wrong_answer').val();
   let not_answer = $('#not_answer').val();
-  (function($) {
-    "use strict"
 
+  const ctx = document.getElementById('resultChart');
 
-    Morris.Donut({
-      element: 'morris_donught',
-      data: [{
-          label: "\xa0 \xa0 Total marks \xa0 \xa0",
-          value: total_mark,
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Total Answered', 'Correct Answered', 'Wrong Answered', 'Not Answered'],
+      datasets: [{
+        label: '',
+        data: [total_mark, right_answer, wrong_answer, not_answer],
+        backgroundColor: [
+          '#FFC300',
+          '#0EE134',
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)'
 
-        },
-        {
-          label: "\xa0 \xa0 Right Answered \xa0 \xa0",
-          value: right_answer,
-
-        }, {
-          label: "\xa0 \xa0 Wrong Answered \xa0 \xa0",
-          value: wrong_answer
-        }, {
-          label: "\xa0 \xa0 Not Answered \xa0 \xa0",
-          value: not_answer
-        }
-      ],
-      resize: true,
-      colors: ['#7ED321', '#593bdb', '#FFAA16', '#FF1616']
-    });
-
-
-
-
-
-
-  })(jQuery);
+        ],
+        hoverOffset: 4
+      }]
+    },
+  });
   </script>
 
 </body>

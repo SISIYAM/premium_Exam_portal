@@ -1,4 +1,5 @@
 <?php
+include './includes/dbcon.php';
 include './includes/login_required.php';
 ?>
 <!DOCTYPE html>
@@ -33,42 +34,10 @@ include './includes/login_required.php';
                       </div>
                     </div>
                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                      <h6 class="text-muted font-semibold">Profile Views</h6>
-                      <h6 class="font-extrabold mb-0">112.000</h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-6 col-lg-3 col-md-6">
-              <div class="card">
-                <div class="card-body px-4 py-4-5">
-                  <div class="row">
-                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                      <div class="stats-icon blue mb-2">
-                        <i class="iconly-boldProfile"></i>
-                      </div>
-                    </div>
-                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                      <h6 class="text-muted font-semibold">Followers</h6>
-                      <h6 class="font-extrabold mb-0">183.000</h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-6 col-lg-3 col-md-6">
-              <div class="card">
-                <div class="card-body px-4 py-4-5">
-                  <div class="row">
-                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                      <div class="stats-icon green mb-2">
-                        <i class="iconly-boldAdd-User"></i>
-                      </div>
-                    </div>
-                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                      <h6 class="text-muted font-semibold">Following</h6>
-                      <h6 class="font-extrabold mb-0">80.000</h6>
+                      <h6 class="text-muted font-semibold">Total Exams</h6>
+                      <h6 class="font-extrabold mb-0"><?php 
+                      echo mysqli_num_rows(mysqli_query($con,"SELECT * FROM exam"));
+                      ?></h6>
                     </div>
                   </div>
                 </div>
@@ -84,13 +53,54 @@ include './includes/login_required.php';
                       </div>
                     </div>
                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                      <h6 class="text-muted font-semibold">Saved Post</h6>
-                      <h6 class="font-extrabold mb-0">112</h6>
+                      <h6 class="text-muted font-semibold">Questions</h6>
+                      <h6 class="font-extrabold mb-0"><?php 
+                      echo mysqli_num_rows(mysqli_query($con,"SELECT * FROM questions"));
+                      ?></h6>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <div class="col-6 col-lg-3 col-md-6">
+              <div class="card">
+                <div class="card-body px-4 py-4-5">
+                  <div class="row">
+                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                      <div class="stats-icon blue mb-2">
+                        <i class="iconly-boldProfile"></i>
+                      </div>
+                    </div>
+                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                      <h6 class="text-muted font-semibold">Teachers</h6>
+                      <h6 class="font-extrabold mb-0"><?php 
+                      echo mysqli_num_rows(mysqli_query($con,"SELECT * FROM admin WHERE post=0"));
+                      ?></h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3 col-md-6">
+              <div class="card">
+                <div class="card-body px-4 py-4-5">
+                  <div class="row">
+                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                      <div class="stats-icon green mb-2">
+                        <i class="iconly-boldAdd-User"></i>
+                      </div>
+                    </div>
+                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                      <h6 class="text-muted font-semibold">Students</h6>
+                      <h6 class="font-extrabold mb-0"><?php 
+                      echo mysqli_num_rows(mysqli_query($con,"SELECT * FROM students"));
+                      ?></h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
           <div class="row">
             <div class="col-12">
@@ -221,8 +231,8 @@ include './includes/login_required.php';
                   <img src="./assets/compiled/jpg/1.jpg" alt="Face 1">
                 </div>
                 <div class="ms-3 name">
-                  <h5 class="font-bold">John Duck</h5>
-                  <h6 class="text-muted mb-0">@johnducky</h6>
+                  <h5 class="font-bold"><?=$_SESSION['username']?></h5>
+
                 </div>
               </div>
             </div>
@@ -277,17 +287,7 @@ include './includes/login_required.php';
       </section>
     </div>
 
-    <footer>
-      <div class="footer clearfix mb-0 text-muted">
-        <div class="float-start">
-          <p>2023 &copy; Mazer</p>
-        </div>
-        <div class="float-end">
-          <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-            by <a href="https://saugi.me">Saugi</a></p>
-        </div>
-      </div>
-    </footer>
+
   </div>
   </div>
   <script src="assets/static/js/components/dark.js"></script>
