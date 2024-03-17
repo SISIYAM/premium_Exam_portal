@@ -48,7 +48,7 @@
                         <div class="col-4">
                           <div class="form-group">
                             <label for="first-name-vertical">Exam Type <span>*</span></label>
-                            <select name="exam_type" id="" class="form-control">
+                            <select name="exam_type" id="" class="form-select">
                               <option value="1">Live Exam</option>
                               <option value="0">Practice Exam</option>
                             </select>
@@ -149,11 +149,6 @@
                             <label for="first-name-vertical">MCQ Marks <span>*</span></label>
                             <input type="text" id="first-name-vertical" class="form-control" name="mcq_marks"
                               placeholder="MCQ Marks" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="first-name-vertical">Written Marks <span>*</span></label>
-                            <input type="text" id="first-name-vertical" class="form-control" name="written_marks"
-                              placeholder="Written Marks" required>
                           </div>
                         </div>
 

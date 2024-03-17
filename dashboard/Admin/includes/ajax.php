@@ -68,7 +68,7 @@ if(isset($_POST['searchExamInformation'])){
      </div>
      <label for="email">Exam Type: </label>
      <div class="form-group">
-       <select name="type" id="examType" class="form-control">
+       <select name="type" id="examType" class="form-select">
        '.$examType.'
        </select>
      </div>
