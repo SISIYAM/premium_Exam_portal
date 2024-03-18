@@ -74,8 +74,8 @@ include 'includes/head.php';
                   <div class="form-group row">
                     <div class="col-sm-2">Marks Per Qustion</div>
                     <div class="col-sm-10">
-                      <input type="number" name="custom_mark" class="form-control" placeholder="Marks Per Question"
-                        required>
+                      <input type="number" step="any" name="custom_mark" class="form-control"
+                        placeholder="Marks Per Question" required>
                     </div>
                   </div>
                   <div class="form-group row">

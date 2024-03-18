@@ -206,7 +206,7 @@
 
                         <div class="form-group col-12">
                           <label for="">Subject*</label>
-                          <select class="form-select" aria-label=".form-select-sm example" name="exam_id">
+                          <select class="form-select" aria-label=".form-select-sm example" name="subject_id">
                             <option value="">Select Subject</option>
                             <?php
                               $selectSubject = mysqli_query($con, "SELECT * FROM subjects");
@@ -600,24 +600,204 @@
         </div>
     </div>
     <?php
+    }elseif (isset($_GET['Custom-Exam'])) {
+      ?>
+    <div class="page-heading">
+
+      <!-- Basic Vertical form layout section start -->
+      <section id="basic-vertical-layouts">
+        <div class="row match-height">
+          <div class="">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Add Custom Exam</h4>
+              </div>
+              <div class="card-content">
+                <div class="card-body">
+                  <form action="" method="post" enctype="multipart/form-data" class="form form-vertical">
+                    <div class="form-body">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="first-name-vertical">Exam Name <span>*</span></label>
+                            <input type="text" id="first-name-vertical" class="form-control" name="exam_name"
+                              placeholder="Exam Name" required>
+                          </div>
+                        </div>
+
+                        <div class="col-4">
+                          <div class="form-group">
+                            <label for="first-name-vertical">Exam Type <span>*</span></label>
+                            <select name="exam_type" id="" class="form-select">
+                              <option value="1">Live Exam</option>
+                              <option value="0">Practice Exam</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <label for="short-description-id-vertical">Duration*</label>
+                          <div class="d-flex my-2">
+                            <div class="col-1">
+                              <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                                name="duration_hour" required>
+                                <option value="">Hours</option>
+                                <?php
+                                for ($i=0; $i <= 12; $i++) { 
+                                  ?>
+                                <option value="<?=$i;?>"><?=$i;?></option>
+                                <?php
+                                }
+                                ?>
+
+                              </select> <br>
+                            </div>
+                            <div class="col-1 mx-2">
+                              <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                                name="duration_minute" required>
+                                <option value="">Minutes</option>
+                                <?php
+                                for ($i=0; $i <= 59; $i++) { 
+                                  ?>
+                                <option value="<?=$i;?>"><?=$i;?></option>
+                                <?php
+                                }
+                                ?>
+
+                              </select> <br>
+
+                            </div>
+                            <div class="col-1 mx-2">
+                              <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                                name="duration_seconds" required>
+                                <option value="">Seconds</option>
+                                <?php
+                                for ($i=0; $i <= 59; $i++) { 
+                                  ?>
+                                <option value="<?=$i;?>"><?=$i;?></option>
+                                <?php
+                                }
+                                ?>
+
+                              </select> <br>
+
+                            </div>
+                          </div>
+                          <label for="first-name-vertical">Exam Start Date And Time <span>*</span></label>
+                          <div style="display:flex" class="my-1">
+
+                            <div class="col-2">
+                              <div class="form-group">
+                                <label for="first-name-vertical">Date <span>*</span></label>
+                                <input type="date" id="first-name-vertical" class="form-control" name="start_date"
+                                  placeholder="Exam Name" required>
+                              </div>
+                            </div>
+
+                            <div class="mx-2 col-2">
+                              <div class="form-group">
+                                <label for="first-name-vertical">Time <span>*</span></label>
+                                <input type="time" id="first-name-vertical" class="form-control" name="start_time"
+                                  placeholder="Exam Name" required>
+                              </div>
+                            </div>
+
+
+
+                          </div>
+
+                          <label for="first-name-vertical">Exam End Date And Time <span>*</span></label>
+                          <div style="display:flex" class="my-1">
+                            <div class="col-2">
+                              <div class="form-group">
+                                <label for="first-name-vertical">Date <span>*</span></label>
+                                <input type="date" id="first-name-vertical" class="form-control" name="end_date"
+                                  placeholder="Exam Name" required>
+                              </div>
+                            </div>
+
+                            <div class="mx-2 col-2">
+                              <div class="form-group">
+                                <label for="first-name-vertical">Time <span>*</span></label>
+                                <input type="time" id="first-name-vertical" class="form-control" name="end_time"
+                                  placeholder="Exam Name" required>
+                              </div>
+                            </div>
+                          </div>
+
+                          <label for="">Question Distribution*</label>
+                          <div class="" style="display:flex; flex-wrap:wrap;">
+                            <?php 
+                              $searchSubject = mysqli_query($con, "SELECT * FROM subjects");
+                              if(mysqli_num_rows($searchSubject) > 0){
+                                while($subjectResult = mysqli_fetch_array($searchSubject)){
+                                  ?>
+                            <div class="mx-2 col-2">
+                              <div class="form-group">
+                                <label for="first-name-vertical"><?=$subjectResult['subject']?></label>
+                                <input type="number" id="first-name-vertical" class="form-control"
+                                  name="<?=$subjectResult['id']?>" placeholder="Ex- 25" value="0">
+                              </div>
+                            </div>
+                            <?php
+                                }
+                              }
+                              ?>
+
+
+                          </div>
+                          <div class="mx-2 col-6">
+                            <div class="form-group">
+                              <label for="first-name-vertical">Marks per question <span>*</span></label>
+                              <input type="number" step="any" id="first-name-vertical" class="form-control" name="marks"
+                                placeholder="marks per question" required>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mx-2 col-6">
+                          <div class="form-group">
+                            <label for="first-name-vertical">Negative mark<span>*</span></label>
+                            <input type="number" step="any" id="first-name-vertical" class="form-control"
+                              name="negative_marks" placeholder="Negative marks per question" required>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+                      <div class="col-12 d-flex justify-content-end">
+                        <button type="submit" name="submitCustomExam" class="btn btn-primary me-1 mb-1">Submit</button>
+                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                      </div>
+                    </div>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+  <?php
     }else {
       ?>
-    <div id="error">
-      <div class="error-page container">
-        <div class="col-md-6 col-12 offset-md-2">
-          <div class="text-center">
-            <img class="img-error" src="./assets/compiled/svg/error-404.svg" alt="Not Found">
-            <h1 class="error-title">NOT FOUND</h1>
-            <p class='fs-5 text-gray-600'>The page you are looking not found.</p>
-            <button onclick="history.back()" class="btn btn-lg btn-outline-primary mt-3">Go Home</button>
-          </div>
+  <div id="error">
+    <div class="error-page container">
+      <div class="col-md-6 col-12 offset-md-2">
+        <div class="text-center">
+          <img class="img-error" src="./assets/compiled/svg/error-404.svg" alt="Not Found">
+          <h1 class="error-title">NOT FOUND</h1>
+          <p class='fs-5 text-gray-600'>The page you are looking not found.</p>
+          <button onclick="history.back()" class="btn btn-lg btn-outline-primary mt-3">Go Home</button>
         </div>
       </div>
     </div>
-    <?php
+  </div>
+  <?php
     } ?>
 
-    <?php include 'includes/footer.php'; ?>
+  <?php include 'includes/footer.php'; ?>
   </div>
   </div>
   <script src="assets/static/js/components/dark.js"></script>

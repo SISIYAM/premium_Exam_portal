@@ -155,6 +155,15 @@ if(isset($_POST['submitExam'])){
   $right = 0;
   $wrong = 0;
   $noAns = 0;
+  
+  #check exam custom or not
+  $checkCustom = mysqli_query($con,"SELECT * FROM exam WHERE exam_id='$exam_id'");
+  if(mysqli_num_rows($checkCustom) > 0){
+    $fetch = mysqli_fetch_array($checkCustom);
+    $custom_exam_type = $fetch['custom_exam_type'];
+  }
+
+  if($custom_exam_type == 0){
 
   $searchExamType = mysqli_query($con,"SELECT * FROM exam WHERE exam_id='$exam_id' AND type=1");
   if(mysqli_num_rows($searchExamType) > 0){
@@ -274,7 +283,151 @@ alert("Failed to insert Result");
 
   
 }
+    
+}else{
+  # condition for custom exam
+  $getMark = mysqli_query($con,"SELECT * FROM exam WHERE exam_id='$exam_id'");
+  if(mysqli_num_rows($getMark) > 0){
+    $fetchMark = mysqli_fetch_array($getMark);
+    $mark = $fetchMark['marks'];
+    $negative_mark = $fetchMark['negative_mark'];
+  }
+  $searchExamType = mysqli_query($con,"SELECT * FROM exam WHERE exam_id='$exam_id' AND type=1");
+  if(mysqli_num_rows($searchExamType) > 0){
 
+  // check is student submit result before or not
+  $checkStudent = mysqli_query($con, "SELECT * FROM result WHERE student_id='$insertStudentID' && exam_id='$exam_id'");
+  if(mysqli_num_rows($checkStudent) > 0){
+
+   ?>
+<script>
+Swal.fire({
+  icon: "error",
+  title: "Exam Already Taken!",
+}).then(() => {
+  location.replace("result.php?Exam-History=<?=$exam_id?>");
+});
+</script>
+<?php
+  }else{
+
+    $select = mysqli_query($con, "SELECT * FROM questions");
+    if(mysqli_num_rows($select) > 0){
+     while($res = mysqli_fetch_array($select)){
+
+       if(isset($_POST[$res['id']])){
+        if($_POST[$res['id']] == $res['answer']){
+          $right++;
+        }elseif ($_POST[$res['id']] == 5) {
+          $noAns ++;
+        }else{
+          $wrong++;
+        }
+        $question_id = $res['id'];
+        $answered = $_POST[$res['id']];
+        
+        $query = mysqli_query($con, "INSERT INTO record (student_id,exam_id,question_id,answered) VALUES ('$insertStudentID','$exam_id','$question_id', '$answered')");
+    
+       }
+      
+       
+    }
+   
+     $totalAnswered = $wrong + $right;
+     $result = ($right * $mark)-($wrong * $negative_mark);
+    
+     $insertResult = mysqli_query($con, "INSERT INTO result (`student_id`, `exam_id`, `result`, `answered`, `wrong_answered`, `right_answered`, `not_answered`) 
+     VALUES ('$insertStudentID','$exam_id','$result','$totalAnswered','$wrong','$right','$noAns')");
+
+     $insertLeaderBoard = mysqli_query($con, "INSERT INTO leaderboard (`student_id`, `exam_id`, `result`) 
+     VALUES ('$insertStudentID','$exam_id','$result')");
+
+    if($insertResult){ 
+     ?>
+<script>
+Swal.fire({
+  icon: "success",
+  title: "Submit Successfully!",
+}).then(() => {
+  location.replace("result.php?Exam-History=<?=$exam_id?>");
+});
+</script>
+<?php
+    }else{
+     ?>
+<script>
+alert("Failed to insert Result");
+</script>
+<?php
+    }
+   
+    }
+
+  }
+  
+}else{
+
+    $select = mysqli_query($con, "SELECT * FROM questions");
+    if(mysqli_num_rows($select) > 0){
+     while($res = mysqli_fetch_array($select)){
+      if(isset($_POST[$res['id']])){
+        if($_POST[$res['id']] == $res['answer']){
+          $right++;
+        }elseif ($_POST[$res['id']] == 5) {
+          $noAns ++;
+        }else{
+          $wrong++;
+        }
+        $question_id = $res['id'];
+        $answered = $_POST[$res['id']];
+       
+        # check record
+        $checkRecord = mysqli_query($con,"SELECT * FROM record WHERE student_id='$insertStudentID' AND exam_id='$exam_id' AND question_id='$question_id'");
+        if(mysqli_num_rows($checkRecord) > 0){
+          $query = mysqli_query($con, "UPDATE record SET answered='$answered' WHERE student_id='$insertStudentID' AND exam_id='$exam_id' AND question_id='$question_id'");
+        }else{
+          $query = mysqli_query($con, "INSERT INTO record (student_id,exam_id,question_id,answered) VALUES ('$insertStudentID','$exam_id','$question_id', '$answered')");
+        }
+       
+       }
+     }
+     
+     $totalAnswered = $wrong + $right;
+     $result = ($right * $mark)-($wrong * $negative_mark);
+    
+     # check result
+     $checkResult = mysqli_query($con, "SELECT * FROM result WHERE student_id='$insertStudentID' AND exam_id='$exam_id'");
+     if(mysqli_num_rows($checkResult) > 0){
+      $insertResult = mysqli_query($con, "UPDATE result SET result='$result',answered='$totalAnswered',wrong_answered='$wrong',right_answered='$right',not_answered='$noAns' WHERE student_id='$insertStudentID' AND exam_id='$exam_id'");
+     }else{
+      $insertResult = mysqli_query($con, "INSERT INTO result (`student_id`, `exam_id`, `result`, `answered`, `wrong_answered`, `right_answered`, `not_answered`) 
+     VALUES ('$insertStudentID','$exam_id','$result','$totalAnswered','$wrong','$right','$noAns')");
+     }
+     
+    if($insertResult){ 
+     ?>
+<script>
+Swal.fire({
+  icon: "success",
+  title: "Submit Successfully!",
+}).then(() => {
+  location.replace("result.php?Exam-History=<?=$exam_id?>");
+});
+</script>
+<?php
+    }else{
+     ?>
+<script>
+alert("Failed to insert Result");
+</script>
+<?php
+    }
+   
+    }
+
+  
+}
+}
 
 }
 

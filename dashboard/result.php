@@ -104,7 +104,7 @@ include 'includes/head.php';
                     ?>
 
         <!-- Pie chart section value -->
-        <input type="hidden" id="total_mark" value="<?=$showResultRow['result']?>">
+        <input type="hidden" id="total_answered" value="<?=$showResultRow['answered']?>">
         <input type="hidden" id="right_answer" value="<?=$showResultRow['right_answered']?>">
         <input type="hidden" id="wrong_answer" value="<?=$showResultRow['wrong_answered']?>">
         <input type="hidden" id="not_answer" value="<?=$showResultRow['not_answered']?>">
@@ -253,7 +253,7 @@ include 'includes/head.php';
                     $showResultRow = mysqli_fetch_array($showResult);
                     ?>
         <!-- Pie chart section value -->
-        <input type="hidden" id="total_mark" value="<?=$showResultRow['result']?>">
+        <input type="hidden" id="total_answered" value="<?=$showResultRow['answered']?>">
         <input type="hidden" id="right_answer" value="<?=$showResultRow['right_answered']?>">
         <input type="hidden" id="wrong_answer" value="<?=$showResultRow['wrong_answered']?>">
         <input type="hidden" id="not_answer" value="<?=$showResultRow['not_answered']?>">
@@ -375,15 +375,21 @@ include 'includes/head.php';
     <?php
     }elseif(isset($_GET['Solution'])){
       $examId = $_GET['Solution'];
-      $select = mysqli_query($con, "SELECT * FROM exam WHERE exam_id='$examId'");
-      if(mysqli_num_rows($select) > 0){
-        $examName = mysqli_fetch_array($select)['exam_name'];
+      $selectExam = mysqli_query($con, "SELECT * FROM exam WHERE exam_id='$examId'");
+      if(mysqli_num_rows($selectExam) > 0){
+        $fetchExam = mysqli_fetch_array($selectExam);
+        $custom_exam_type = $fetchExam['custom_exam_type'];
+        $examName = $fetchExam['exam_name'];
       }else{
         $examName = "N/A";
       }
       ?>
     <div class="row">
       <div class="col-xl-12 col-xxl-12">
+
+        <?php
+      if($custom_exam_type == 0){
+        ?>
         <div class="card">
 
           <?php 
@@ -532,6 +538,11 @@ include 'includes/head.php';
           }
           ?>
         </div>
+        <?php
+      }else{
+       // admin custom exam solution code
+      }
+      ?>
 
         </form>
       </div>
@@ -730,7 +741,7 @@ include 'includes/head.php';
   <!-- Chartjs -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-  let total_mark = $('#total_mark').val();
+  let total_answered = $('#total_answered').val();
   let right_answer = $('#right_answer').val();
   let wrong_answer = $('#wrong_answer').val();
   let not_answer = $('#not_answer').val();
@@ -743,7 +754,7 @@ include 'includes/head.php';
       labels: ['Total Answered', 'Correct Answered', 'Wrong Answered', 'Not Answered'],
       datasets: [{
         label: '',
-        data: [total_mark, right_answer, wrong_answer, not_answer],
+        data: [total_answered, right_answer, wrong_answer, not_answer],
         backgroundColor: [
           '#FFC300',
           '#0EE134',

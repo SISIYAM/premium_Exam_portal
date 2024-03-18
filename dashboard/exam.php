@@ -97,7 +97,13 @@ include 'includes/head.php';
         $examNme = $resultRow['exam_name'];
         $duration = $resultRow['duration'];
         $mcqMarks = $resultRow['mcq_marks'];
-        $writtenMarks = $resultRow['written_marks'];
+        if($resultRow['marks'] == NULL){
+          $marks = 0;
+        }else{
+          $marks = $resultRow['marks'];
+        }
+       
+        $custom_exam_type = $resultRow['custom_exam_type'];
         $exam_start_date = strtotime($resultRow['exam_start']);
         $new_start_date = date('d M Y', $exam_start_date);
         $exam_start_time = strtotime($resultRow['exam_start_time']);
@@ -173,15 +179,7 @@ include 'includes/head.php';
                 <?=$new_start_date." ".$new_start_time?></span>
 
               <div class="text-dark">
-                <p>Total marks: <?=$mcqMarks+$writtenMarks?></p>
-                <p>MCQ marks: <?=$mcqMarks?></p>
-                <?php
-              if($writtenMarks != 0){
-                ?>
-                <p>Written marks: <?=$writtenMarks?></p>
-                <?php
-                }
-              ?>
+                <p>Total marks: <?=$mcqMarks?></p>
                 <p>Time: <?php
                       if(((int)($duration/3600)) == 0 && ((int)($duration%3600)/60) != 0 && (($duration%3600)%60) != 0){
                         echo ((int)(($duration%3600)/60)." min ".(($duration%3600)%60)." Sec");
@@ -221,7 +219,8 @@ include 'includes/head.php';
             <div class="card">
 
               <?php 
-          $i = 0;
+              if($custom_exam_type == 0){
+                $i = 0;
           $select = mysqli_query($con, "SELECT * FROM questions WHERE exam_id='$examId'");
           if(mysqli_num_rows($select) > 0){
             while($row = mysqli_fetch_array($select)){
@@ -284,6 +283,92 @@ include 'includes/head.php';
               <?php
             }
           }
+              }else{
+                $i=0;
+                $search_subject = mysqli_query($con, "SELECT * FROM subjects");
+                if(mysqli_num_rows($search_subject) > 0){
+                  while($subject_row = mysqli_fetch_array($search_subject)){
+                    $subject_id = $subject_row['id'];
+                    $search_limit = mysqli_query($con,"SELECT * FROM exam WHERE exam_id = '$examId'");
+                    if(mysqli_num_rows($search_limit) > 0){
+                      $result = mysqli_fetch_array($search_limit);
+                      $limit = $result[$subject_row['subject']];
+                    }else{
+                      $limit = 0;
+                    }
+                    if($limit != NULL){
+                      ?>
+              <div class="card-header text-dark h2"><?=$subject_row['subject']?></div>
+
+              <?php 
+             
+              $select = mysqli_query($con, "SELECT * FROM questions WHERE subject_id='$subject_id' ORDER BY RAND() LIMIT $limit");
+              if(mysqli_num_rows($select) > 0){
+                while($row = mysqli_fetch_array($select)){
+                  $i++;
+                  ?>
+              <div class="card-body">
+                <h6 class="badge bg-primary text-light" style="font-size:13px">Question : <?=$i?> </h6>
+                <span class="badge bg-light text-dark"
+                  style="float: right; margin-right:20px; color:#000000; font-weight:bold">Mark
+                  :
+                  <?=$marks?></span>
+                <div class="radio-list col-xl-12">
+                  <p for="" class="font-weight-bold text-dark my-3 h4" style="color:#000000;">
+                    <?=$row['question']?>
+                  </p>
+                  <?php
+                     if(isset($row['option_1'])){
+                      ?>
+                  <div class="radio-item">
+                    <input type="radio" name="<?=$row['id']?>" value="1 " id="radio1<?=$i?>">
+                    <label for="radio1<?=$i?>"><?=$row['option_1']?></label>
+                  </div>
+                  <?php
+                     }
+                     ?>
+                  <?php
+                     if(isset($row['option_2'])){
+                      ?>
+                  <div class="radio-item">
+                    <input type="radio" name="<?=$row['id']?>" value="2" id="radio2<?=$i?>">
+                    <label for="radio2<?=$i?>"><?=$row['option_2']?></label>
+                  </div>
+                  <?php
+                     }
+                     ?>
+                  <?php
+                     if(isset($row['option_3'])){
+                      ?>
+                  <div class="radio-item">
+                    <input type="radio" name="<?=$row['id']?>" value="3" id="radio3<?=$i?>">
+                    <label for="radio3<?=$i?>"><?=$row['option_3']?></label>
+                  </div>
+                  <?php
+                     }
+                     ?>
+                  <?php
+                     if(isset($row['option_4'])){
+                      ?>
+                  <div class="radio-item">
+                    <input type="radio" name="<?=$row['id']?>" value="4" id="radio4<?=$i?>">
+                    <label for="radio4<?=$i?>"><?=$row['option_4']?></label>
+                  </div>
+                  <?php
+                     }
+                     ?>
+                  <input type="radio" checked value="5" name="<?=$row['id']?>" style="display:none;">
+                </div>
+
+              </div>
+              <?php
+                }
+              }
+             
+                    }
+                  }
+                }
+              }
           ?>
               <button type="submit" id="submitBtn" name="submitExam"
                 class="btn btn-primary btn-lg col-xl-12 text-light">Final

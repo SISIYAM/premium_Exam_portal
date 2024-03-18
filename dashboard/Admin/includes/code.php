@@ -185,9 +185,63 @@ location.replace("list.php?Exam");
     }
 }
 
+// add custom exam
+if (isset($_POST['submitCustomExam'])) {
+  $ChangeExam_name = $_POST['exam_name'];
+  $exam_name = str_replace("'","\'", $ChangeExam_name);
+  $exam_id = uniqid();
+  $duration = (($_POST['duration_hour'] * 3600) + ($_POST['duration_minute'] * 60) + ($_POST['duration_seconds']));
+  $exam_start = $_POST['start_date'];
+  $exam_start_time = $_POST['start_time'];
+  $exam_end = $_POST['end_date'];
+  $exam_end_time = $_POST['end_time'];
+  $marks = $_POST['marks'];
+  $negative_mark = $_POST['negative_marks'];
+  $exam_type = $_POST['exam_type'];
+  $custom_exam_type = 1;
+  $added_by = $_SESSION['username'];
+ 
+    $sql = "INSERT INTO `exam`(`exam_name`, `exam_id`, `duration`, `exam_start`, `exam_start_time`, `exam_end`,`exam_end_time`,`type`,`added_by`,`custom_exam_type`,`negative_mark`,`marks`) 
+    VALUES ('$exam_name','$exam_id','$duration','$exam_start','$exam_start_time','$exam_end','$exam_end_time','$exam_type','$added_by','$custom_exam_type','$negative_mark','$marks')";
+    $query = mysqli_query($con, $sql);
+  
+    if ($query) {
+      $sumMarks=0;
+      $searchSubjectColumn= mysqli_query($con, "SELECT * FROM subjects");
+      if(mysqli_num_rows($searchSubjectColumn) > 0){
+        while ($subjectRow = mysqli_fetch_array($searchSubjectColumn)) {
+          if($_POST[$subjectRow['id']] != 0 && $_POST[$subjectRow['id']] != NULL){
+            $subject = $subjectRow['subject'];
+            $limit = $_POST[$subjectRow['id']];
+            $sumMarks = ($sumMarks + $limit);
+            $updateExamSql = mysqli_query($con, "UPDATE exam SET $subject='$limit' WHERE exam_id='$exam_id'");
+          }
+        }
+      }
+      $TotalMarks = $sumMarks * $marks;
+      mysqli_query($con, "UPDATE exam SET mcq_marks='$TotalMarks' WHERE exam_id='$exam_id'");
+
+      $_SESSION['message'] = "Success";
+      ?>
+<script>
+location.replace("list.php?Exam");
+</script>
+<?php
+    } else {
+      $_SESSION['error'] = "Failed";
+      ?>
+<script>
+location.replace("list.php?Exam");
+</script>
+<?php
+  
+    }
+}
+
 // Add MCQ Question
 if (isset($_POST['addQuestion'])) {
   $exam_id = $_POST['exam_id'];
+  $subject_id = $_POST['subject_id'];
   $marks = $_POST['marks'];
   $question_type= 1;
   $negative_marks = $_POST['negative_marks'];
@@ -206,8 +260,8 @@ if (isset($_POST['addQuestion'])) {
   $answer = $_POST['answer'];
   $added_by = $_SESSION['username'];
   
-    $sql = "INSERT INTO `questions`(`exam_id`, `question_type`,`question`, `option_1`, `option_2`, `option_3`, `option_4`, `answer`, `mark`, `negative_mark`,`solution`,`added_by`)
-    VALUES ('$exam_id','$question_type','$question','$option_1','$option_2','$option_3','$option_4','$answer','$marks','$negative_marks','$solution','$added_by')";
+    $sql = "INSERT INTO `questions`(`exam_id`,`subject_id`, `question_type`,`question`, `option_1`, `option_2`, `option_3`, `option_4`, `answer`, `mark`, `negative_mark`,`solution`,`added_by`)
+    VALUES ('$exam_id','$subject_id','$question_type','$question','$option_1','$option_2','$option_3','$option_4','$answer','$marks','$negative_marks','$solution','$added_by')";
     $query = mysqli_query($con, $sql);
   
     if ($query) {
@@ -239,12 +293,21 @@ if(isset($_POST['addSubject'])){
     $query = mysqli_query($con, $sql);
   
     if ($query) {
-      $_SESSION['message'] = "Success";
-      ?>
+      $addColumn = mysqli_query($con, "ALTER TABLE `exam` ADD $subject VARCHAR(255) NULL");
+      if($addColumn){
+        $_SESSION['message'] = "Success";
+        ?>
 <script>
 location.replace("list.php?Subjects");
 </script>
 <?php
+      }else{
+        ?>
+<script>
+alert("Column Add Failed");
+</script>
+<?php
+      }
     } else {
       $_SESSION['error'] = "Failed";
       $_SESSION['replace_url'] = "add.php?Subjects";
