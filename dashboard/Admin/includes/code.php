@@ -435,4 +435,76 @@ location.replace("list.php?Questions");
 }
 
 
+// change password
+if(isset($_POST['changePassword'])){
+  $old_password = mysqli_real_escape_string($con, $_POST['old_password']);
+  $new_password = mysqli_real_escape_string($con, $_POST['new_password']);
+  $confirm_password = mysqli_real_escape_string($con, $_POST['confirm_password']);
+
+    $new_pass = password_hash($new_password,  PASSWORD_BCRYPT);
+    $c_pass = password_hash($confirm_password, PASSWORD_BCRYPT);
+    $password_search = "SELECT * FROM admin WHERE id='$admin_id' AND status='1'";
+    $query = mysqli_query($con,$password_search);
+
+    $password_count = mysqli_num_rows($query);
+
+  if($new_password != $confirm_password){
+    ?>
+<script>
+Swal.fire({
+  icon: "error",
+  title: "Password And Confirm Password didn't matched!",
+}).then(() => {
+  $("#passwordModal").modal("show");
+});
+</script>
+<?php
+  }else{
+        $password_pass = mysqli_fetch_assoc($query);
+        $db_pass = $password_pass['password'];
+        $pass_decode = password_verify($old_password, $db_pass);
+        if($pass_decode){
+          $change =mysqli_query($con,"UPDATE admin SET password = '{$new_pass}',confirm_password = '{$c_pass}' WHERE id = {$admin_id}");
+
+          if($change){
+            ?>
+<script>
+Swal.fire({
+  icon: "success",
+  title: "Password changed Successfully!",
+}).then(() => {
+  location.replace("index.php");
+});
+</script>
+<?php
+          }else{
+            ?>
+<script>
+Swal.fire({
+  icon: "error",
+  title: "Failed!",
+}).then(() => {
+  $("#passwordModal").modal("show");
+});
+</script>
+<?php
+          }
+        }else{
+          ?>
+<script>
+Swal.fire({
+  icon: "warning",
+  title: "Old Password didn't matched!",
+}).then(() => {
+  $("#passwordModal").modal("show");
+});
+</script>
+<?php
+        }
+  }
+  
+ }
+
+
+
 ?>

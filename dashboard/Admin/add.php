@@ -837,7 +837,8 @@
   <script src="js/sweetalert.js"></script>
   <script src="js/script.js"></script>
   <script src="js/custom.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <?php include 'includes/code.php'; ?>
 </body>
 
 </html>

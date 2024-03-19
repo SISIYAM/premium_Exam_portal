@@ -297,11 +297,11 @@ include './includes/login_required.php';
   <script src="assets/compiled/js/app.js"></script>
 
 
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Need: Apexcharts -->
   <script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
   <script src="assets/static/js/pages/dashboard.js"></script>
-
+  <?php include './includes/code.php' ?>
 </body>
 
 </html>

@@ -9,4 +9,6 @@ location.replace("login.php?login");
 <?php
 }
 
+$admin_id = $_SESSION['id'];
+
 ?>

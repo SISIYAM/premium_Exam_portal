@@ -1,7 +1,6 @@
 <?php
 include './includes/login_required.php';
 include 'includes/dbcon.php';
-include 'includes/code.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -737,6 +736,7 @@ include 'includes/head.php';
   <script src="assets/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
   <script src="assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
   <script src="assets/static/js/pages/datatables.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="assets/extensions/sweetalert2/sweetalert2.min.js"></script>
   <script src="js/sweetalert.js"></script>
   <?php
@@ -795,6 +795,7 @@ include 'includes/head.php';
 
   ?>
   <script src="js/script.js"></script>
+  <?php include 'includes/code.php'; ?>
 </body>
 
 </html>

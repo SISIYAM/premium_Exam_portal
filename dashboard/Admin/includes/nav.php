@@ -57,7 +57,7 @@
             </a>
           </li>
           <li class="sidebar-item ">
-            <a href="javascript:void(0)" class='sidebar-link'>
+            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#passwordModal" class='sidebar-link'>
               <i class="bi bi-person-circle"></i>
               <span>Change Password</span>
             </a>
@@ -206,6 +206,42 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
           <a href="includes/logout.php"><button type="button" class="btn btn-primary">Logout</button></a>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal PassWord Change -->
+  <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabelPassword">Change Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </button>
+        </div>
+        <form action="" method="post">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Old Password:</label>
+              <input type="text" class="form-control" id="recipient-name" name="old_password"
+                placeholder="Enter Old Password">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">New Password:</label>
+              <input type="text" class="form-control" id="recipient-name" name="new_password"
+                placeholder="Enter New Password">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Confirm Password:</label>
+              <input type="text" class="form-control" id="recipient-name" name="confirm_password"
+                placeholder="Enter Confirm Password">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" name="changePassword" class="btn btn-primary">Change</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
