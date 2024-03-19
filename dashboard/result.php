@@ -541,6 +541,166 @@ include 'includes/head.php';
         <?php
       }else{
        // admin custom exam solution code
+       ?>
+        <div class="card">
+
+          <?php 
+              
+              $select = mysqli_query($con, "SELECT * FROM questions");
+              if(mysqli_num_rows($select) > 0)
+              {
+                while($row = mysqli_fetch_array($select)){
+                  $questionID = $row['id'];
+                  $correctAnswer = $row['answer'];
+                  $record_questions = mysqli_query($con, "SELECT * FROM record WHERE exam_id='$examId' AND student_id='$student_id'");
+                  if(mysqli_num_rows($record_questions) > 0){
+                    $i = 0;
+                    while($record_question_id = mysqli_fetch_array($record_questions)){
+                    $i++;
+                      if($questionID == $record_question_id['question_id']){
+                        $matchQuestion = mysqli_query($con, "SELECT * FROM record WHERE exam_id='$examId' AND student_id='$student_id' AND question_id='$questionID'");
+                        if(mysqli_num_rows($matchQuestion) > 0){
+                          $answeredOption = mysqli_fetch_array($matchQuestion)['answered'];
+                        }else{
+                          $answeredOption = 5;
+                        }
+                        ?>
+
+          <div class="card-body">
+            <h6 class="badge bg-primary text-light" style="font-size:13px">Question : <?=$i?> </h6>
+            <span class="badge bg-light text-dark"
+              style="float: right; margin-right:20px; color:#000000; font-weight:bold">Mark
+              :
+              <?=$row['mark']?></span>
+            <div class="radio-list col-xl-12">
+              <p for="" class="font-weight-bold text-dark my-3 h4" style="color:#000000;">
+                <?=$row['question']?>
+              </p>
+              <!-- if user answered correct answer then -->
+              <?php
+                        if($answeredOption == $correctAnswer){
+                        ?>
+              <div class="radio-item">
+                <label <?php if($answeredOption == 1){
+                            ?> class="correct" <?php
+                          } ?> for="radio1<?=$i?>"><?=$row['option_1']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($answeredOption == 2){
+                            ?> class="correct" <?php
+                          } ?> for="radio2<?=$i?>"><?=$row['option_2']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($answeredOption == 3){
+                            ?> class="correct" <?php
+                          } ?> for="radio3<?=$i?>"><?=$row['option_3']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($answeredOption == 4){
+                            ?> class="correct" <?php
+                          } ?> for="radio4<?=$i?>"><?=$row['option_4']?></label>
+              </div>
+              <?php  
+                  }elseif($answeredOption == 5){
+                    ?>
+              <span class="btn btn-dark mb-4">Not Answered</span>
+              <div class="radio-item">
+                <label <?php if($correctAnswer == 1){
+                            ?> class="correct" <?php
+                          } ?> for="radio1<?=$i?>"><?=$row['option_1']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($correctAnswer == 2){
+                            ?> class="correct" <?php
+                          } ?> for="radio2<?=$i?>"><?=$row['option_2']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($correctAnswer == 3){
+                            ?> class="correct" <?php
+                          } ?> for="radio3<?=$i?>"><?=$row['option_3']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($correctAnswer == 4){
+                            ?> class="correct" <?php
+                          } ?> for="radio4<?=$i?>"><?=$row['option_4']?></label>
+              </div>
+              <?php
+                  }else{
+                    ?>
+              <div class="radio-item">
+                <label <?php if($answeredOption == 1){
+                              ?> class="wrong" <?php
+                            } if($correctAnswer == 1){
+                              ?> class="correct" <?php
+                            } ?> for="radio1<?=$i?>"><?=$row['option_1']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($answeredOption == 2){
+                              ?> class="wrong" <?php
+                            } if($correctAnswer == 2){
+                              ?> class="correct" <?php
+                            } ?> for="radio2<?=$i?>"><?=$row['option_2']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($answeredOption == 3){
+                              ?> class="wrong" <?php
+                            } if($correctAnswer == 3){
+                              ?> class="correct" <?php
+                            } ?> for="radio3<?=$i?>"><?=$row['option_3']?></label>
+              </div>
+
+              <div class="radio-item">
+                <label <?php if($answeredOption == 4){
+                              ?> class="wrong" <?php
+                            } if($correctAnswer == 4){
+                              ?> class="correct" <?php
+                            } ?> for="radio4<?=$i?>"><?=$row['option_4']?></label>
+              </div>
+              <?php
+                  }
+                    ?>
+            </div>
+
+          </div>
+          <?php
+                        if($row['solution'] > 0){
+                          ?>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-12 mb-4">
+                <div class="card bg-light text-dark">
+                  <div class="card-body rounded" style="border:2px solid #2EAD1E">
+                    <span class="font-weight-bold text-dark">Solution:</span>
+                    <div class="solution">
+                      <?=$row['solution']?>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <?php
+                        }
+                      }
+                      
+          }
+        }
+
+
+         
+            }
+          }
+          ?>
+        </div>
+        <?php
       }
       ?>
 

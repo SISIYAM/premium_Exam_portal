@@ -223,6 +223,25 @@
 
                         </div>
 
+                        <div class="form-group col-12">
+                          <label for="">Chapter*</label>
+                          <select class="form-select" aria-label=".form-select-sm example" name="subject_id">
+                            <option value="">Select Chapter</option>
+                            <?php
+                              $selectChapter = mysqli_query($con, "SELECT * FROM chapter");
+                              if(mysqli_num_rows($selectChapter) > 0){
+                                while($chapterRow = mysqli_fetch_array($selectChapter)){
+                                  ?>
+                            <option value="<?=$chapterRow['id']?>"><?=$chapterRow['name']?></option>
+                            <?php
+                                }
+                              }
+                              ?>
+
+                          </select>
+
+                        </div>
+
                         <div class="form-group">
                           <label for="first-name-vertical">Marks <span>*</span></label>
                           <input type="text" id="first-name-vertical" class="form-control" name="marks"
