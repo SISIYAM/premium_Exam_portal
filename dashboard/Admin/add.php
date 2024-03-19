@@ -31,6 +31,7 @@
             <div class="card">
               <div class="card-header">
                 <h4 class="card-title">Add Exam</h4>
+                <a href="add.php?Custom-Exam"><button class="btn btn-success">Add Custom Question</button></a>
               </div>
               <div class="card-content">
                 <div class="card-body">

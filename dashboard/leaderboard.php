@@ -80,7 +80,7 @@ include './includes/login_required.php';
     if(isset($_GET['Leader-Board'])){
       $no =1;
       $LeaderBoardExamId = $_GET['Leader-Board'];
-      $select = mysqli_query($con, "SELECT * FROM result WHERE exam_id='$LeaderBoardExamId' ORDER BY result DESC");
+      $select = mysqli_query($con, "SELECT * FROM leaderboard WHERE exam_id='$LeaderBoardExamId' ORDER BY result DESC");
 
       // select exam name
       $selectExamName = mysqli_query($con, "SELECT * FROM exam WHERE exam_id='$LeaderBoardExamId'");
@@ -89,10 +89,9 @@ include './includes/login_required.php';
       }else{
         $NameOfExam = "";
     }
-}
-    ?>
 
 
+      ?>
     <div class="container-fluid">
       <div class="row page-titles mx-0">
         <div class="col-sm-6 p-md-0">
@@ -175,6 +174,9 @@ include './includes/login_required.php';
   </div>
 
   </div>
+  <?php
+}
+    ?>
   </div>
   <!--**********************************
             Content body end

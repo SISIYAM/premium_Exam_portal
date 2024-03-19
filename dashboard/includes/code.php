@@ -251,15 +251,29 @@ alert("Failed to insert Result");
        $question_id = $res['id'];
        $answered = $_POST[$res['id']];
        
-       $query = mysqli_query($con, "UPDATE record SET answered='$answered' WHERE student_id='$insertStudentID' AND exam_id='$exam_id' AND question_id='$question_id'");
+       #check record
+       $checkRecord = mysqli_query($con, "SELECT * FROM record WHERE student_id='$insertStudentID' AND exam_id='$exam_id' AND question_id='$question_id'");
+       if(mysqli_query($checkRecord) > 0){
+        $query = mysqli_query($con, "UPDATE record SET answered='$answered' WHERE student_id='$insertStudentID' AND exam_id='$exam_id' AND question_id='$question_id'");
+       }else{
+        $query = mysqli_query($con, "INSERT INTO record (student_id,exam_id,question_id,answered) VALUES ('$insertStudentID','$exam_id','$question_id', '$answered')");
+       }
+      
      }
      
      $totalAnswered = $wrong + $right;
      $result = ($right * $mark)-($wrong * $negative_mark);
     
+      # check result
+      $checkResult = mysqli_query($con, "SELECT * FROM result WHERE student_id='$insertStudentID' AND exam_id='$exam_id'");
+      if(mysqli_num_rows($checkResult) > 0){
+       $insertResult = mysqli_query($con, "UPDATE result SET result='$result',answered='$totalAnswered',wrong_answered='$wrong',right_answered='$right',not_answered='$noAns' WHERE student_id='$insertStudentID' AND exam_id='$exam_id'");
+      }else{
+       $insertResult = mysqli_query($con, "INSERT INTO result (`student_id`, `exam_id`, `result`, `answered`, `wrong_answered`, `right_answered`, `not_answered`) 
+      VALUES ('$insertStudentID','$exam_id','$result','$totalAnswered','$wrong','$right','$noAns')");
+      }
+      
      
-     $insertResult = mysqli_query($con, "UPDATE result SET result='$result',answered='$totalAnswered',wrong_answered='$wrong',right_answered='$right',not_answered='$noAns' WHERE student_id='$insertStudentID' AND exam_id='$exam_id'");
-
     if($insertResult){ 
      ?>
 <script>
@@ -402,6 +416,13 @@ alert("Failed to insert Result");
      }else{
       $insertResult = mysqli_query($con, "INSERT INTO result (`student_id`, `exam_id`, `result`, `answered`, `wrong_answered`, `right_answered`, `not_answered`) 
      VALUES ('$insertStudentID','$exam_id','$result','$totalAnswered','$wrong','$right','$noAns')");
+     }
+
+     # check leaderboard 
+     $checkLeaderBoard = mysqli_query($con,"SELECT * FROM leaderboard WHERE student_id='$insertStudentID' AND exam_id='$exam_id'");
+     if(mysqli_num_rows($checkLeaderBoard) == 0){
+      $insertLeaderBoard = mysqli_query($con, "INSERT INTO leaderboard (`student_id`, `exam_id`, `result`) 
+      VALUES ('$insertStudentID','$exam_id','$result')");
      }
      
     if($insertResult){ 
