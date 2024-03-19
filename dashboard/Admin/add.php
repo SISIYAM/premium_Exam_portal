@@ -225,7 +225,7 @@
 
                         <div class="form-group col-12">
                           <label for="">Chapter*</label>
-                          <select class="form-select" aria-label=".form-select-sm example" name="subject_id">
+                          <select class="form-select" aria-label=".form-select-sm example" name="chapter_id">
                             <option value="">Select Chapter</option>
                             <?php
                               $selectChapter = mysqli_query($con, "SELECT * FROM chapter");

@@ -242,6 +242,7 @@ location.replace("list.php?Exam");
 if (isset($_POST['addQuestion'])) {
   $exam_id = $_POST['exam_id'];
   $subject_id = $_POST['subject_id'];
+  $chapter_id = $_POST['chapter_id'];
   $marks = $_POST['marks'];
   $question_type= 1;
   $negative_marks = $_POST['negative_marks'];
@@ -260,8 +261,8 @@ if (isset($_POST['addQuestion'])) {
   $answer = $_POST['answer'];
   $added_by = $_SESSION['username'];
   
-    $sql = "INSERT INTO `questions`(`exam_id`,`subject_id`, `question_type`,`question`, `option_1`, `option_2`, `option_3`, `option_4`, `answer`, `mark`, `negative_mark`,`solution`,`added_by`)
-    VALUES ('$exam_id','$subject_id','$question_type','$question','$option_1','$option_2','$option_3','$option_4','$answer','$marks','$negative_marks','$solution','$added_by')";
+    $sql = "INSERT INTO `questions`(`exam_id`,`subject_id`,`chapter_id`,`question_type`,`question`, `option_1`, `option_2`, `option_3`, `option_4`, `answer`, `mark`, `negative_mark`,`solution`,`added_by`)
+    VALUES ('$exam_id','$subject_id','$chapter_id','$question_type','$question','$option_1','$option_2','$option_3','$option_4','$answer','$marks','$negative_marks','$solution','$added_by')";
     $query = mysqli_query($con, $sql);
   
     if ($query) {
